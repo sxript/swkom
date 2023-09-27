@@ -1,32 +1,21 @@
 package at.fhtw.swkom.paperless.services.dto;
 
-import java.net.URI;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonCreator;
+
 import java.util.Arrays;
 import org.openapitools.jackson.nullable.JsonNullable;
-import java.util.NoSuchElementException;
-import org.openapitools.jackson.nullable.JsonNullable;
-import java.time.OffsetDateTime;
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.*;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 
-import java.util.*;
 import jakarta.annotation.Generated;
 
 /**
- * DocumentType
+ * NewDocumentType
  */
 
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen")
-public class DocumentType {
-
-  private Long id;
-
-  private JsonNullable<String> slug = JsonNullable.<String>undefined();
+public class NewDocumentTypeDto {
 
   private JsonNullable<String> name = JsonNullable.<String>undefined();
 
@@ -36,49 +25,7 @@ public class DocumentType {
 
   private Boolean isInsensitive;
 
-  private Long documentCount;
-
-  public DocumentType id(Long id) {
-    this.id = id;
-    return this;
-  }
-
-  /**
-   * Get id
-   * @return id
-  */
-  
-  @Schema(name = "id", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("id")
-  public Long getId() {
-    return id;
-  }
-
-  public void setId(Long id) {
-    this.id = id;
-  }
-
-  public DocumentType slug(String slug) {
-    this.slug = JsonNullable.of(slug);
-    return this;
-  }
-
-  /**
-   * Get slug
-   * @return slug
-  */
-  
-  @Schema(name = "slug", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("slug")
-  public JsonNullable<String> getSlug() {
-    return slug;
-  }
-
-  public void setSlug(JsonNullable<String> slug) {
-    this.slug = slug;
-  }
-
-  public DocumentType name(String name) {
+  public NewDocumentTypeDto name(String name) {
     this.name = JsonNullable.of(name);
     return this;
   }
@@ -98,7 +45,7 @@ public class DocumentType {
     this.name = name;
   }
 
-  public DocumentType match(String match) {
+  public NewDocumentTypeDto match(String match) {
     this.match = JsonNullable.of(match);
     return this;
   }
@@ -118,7 +65,7 @@ public class DocumentType {
     this.match = match;
   }
 
-  public DocumentType matchingAlgorithm(Long matchingAlgorithm) {
+  public NewDocumentTypeDto matchingAlgorithm(Long matchingAlgorithm) {
     this.matchingAlgorithm = matchingAlgorithm;
     return this;
   }
@@ -138,7 +85,7 @@ public class DocumentType {
     this.matchingAlgorithm = matchingAlgorithm;
   }
 
-  public DocumentType isInsensitive(Boolean isInsensitive) {
+  public NewDocumentTypeDto isInsensitive(Boolean isInsensitive) {
     this.isInsensitive = isInsensitive;
     return this;
   }
@@ -158,26 +105,6 @@ public class DocumentType {
     this.isInsensitive = isInsensitive;
   }
 
-  public DocumentType documentCount(Long documentCount) {
-    this.documentCount = documentCount;
-    return this;
-  }
-
-  /**
-   * Get documentCount
-   * @return documentCount
-  */
-  
-  @Schema(name = "document_count", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("document_count")
-  public Long getDocumentCount() {
-    return documentCount;
-  }
-
-  public void setDocumentCount(Long documentCount) {
-    this.documentCount = documentCount;
-  }
-
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -186,14 +113,11 @@ public class DocumentType {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    DocumentType documentType = (DocumentType) o;
-    return Objects.equals(this.id, documentType.id) &&
-        equalsNullable(this.slug, documentType.slug) &&
-        equalsNullable(this.name, documentType.name) &&
-        equalsNullable(this.match, documentType.match) &&
-        Objects.equals(this.matchingAlgorithm, documentType.matchingAlgorithm) &&
-        Objects.equals(this.isInsensitive, documentType.isInsensitive) &&
-        Objects.equals(this.documentCount, documentType.documentCount);
+    NewDocumentTypeDto newDocumentTypeDto = (NewDocumentTypeDto) o;
+    return equalsNullable(this.name, newDocumentTypeDto.name) &&
+        equalsNullable(this.match, newDocumentTypeDto.match) &&
+        Objects.equals(this.matchingAlgorithm, newDocumentTypeDto.matchingAlgorithm) &&
+        Objects.equals(this.isInsensitive, newDocumentTypeDto.isInsensitive);
   }
 
   private static <T> boolean equalsNullable(JsonNullable<T> a, JsonNullable<T> b) {
@@ -202,7 +126,7 @@ public class DocumentType {
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, hashCodeNullable(slug), hashCodeNullable(name), hashCodeNullable(match), matchingAlgorithm, isInsensitive, documentCount);
+    return Objects.hash(hashCodeNullable(name), hashCodeNullable(match), matchingAlgorithm, isInsensitive);
   }
 
   private static <T> int hashCodeNullable(JsonNullable<T> a) {
@@ -215,14 +139,11 @@ public class DocumentType {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class DocumentType {\n");
-    sb.append("    id: ").append(toIndentedString(id)).append("\n");
-    sb.append("    slug: ").append(toIndentedString(slug)).append("\n");
+    sb.append("class NewDocumentType {\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    match: ").append(toIndentedString(match)).append("\n");
     sb.append("    matchingAlgorithm: ").append(toIndentedString(matchingAlgorithm)).append("\n");
     sb.append("    isInsensitive: ").append(toIndentedString(isInsensitive)).append("\n");
-    sb.append("    documentCount: ").append(toIndentedString(documentCount)).append("\n");
     sb.append("}");
     return sb.toString();
   }

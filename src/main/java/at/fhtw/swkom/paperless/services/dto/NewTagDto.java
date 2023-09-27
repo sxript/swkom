@@ -1,32 +1,21 @@
 package at.fhtw.swkom.paperless.services.dto;
 
-import java.net.URI;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonCreator;
+
 import java.util.Arrays;
 import org.openapitools.jackson.nullable.JsonNullable;
-import java.util.NoSuchElementException;
-import org.openapitools.jackson.nullable.JsonNullable;
-import java.time.OffsetDateTime;
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.*;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 
-import java.util.*;
 import jakarta.annotation.Generated;
 
 /**
- * DocTag
+ * NewTag
  */
 
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen")
-public class DocTag {
-
-  private Long id;
-
-  private JsonNullable<String> slug = JsonNullable.<String>undefined();
+public class NewTagDto {
 
   private JsonNullable<String> name = JsonNullable.<String>undefined();
 
@@ -40,49 +29,7 @@ public class DocTag {
 
   private Boolean isInboxTag;
 
-  private Long documentCount;
-
-  public DocTag id(Long id) {
-    this.id = id;
-    return this;
-  }
-
-  /**
-   * Get id
-   * @return id
-  */
-  
-  @Schema(name = "id", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("id")
-  public Long getId() {
-    return id;
-  }
-
-  public void setId(Long id) {
-    this.id = id;
-  }
-
-  public DocTag slug(String slug) {
-    this.slug = JsonNullable.of(slug);
-    return this;
-  }
-
-  /**
-   * Get slug
-   * @return slug
-  */
-  
-  @Schema(name = "slug", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("slug")
-  public JsonNullable<String> getSlug() {
-    return slug;
-  }
-
-  public void setSlug(JsonNullable<String> slug) {
-    this.slug = slug;
-  }
-
-  public DocTag name(String name) {
+  public NewTagDto name(String name) {
     this.name = JsonNullable.of(name);
     return this;
   }
@@ -102,7 +49,7 @@ public class DocTag {
     this.name = name;
   }
 
-  public DocTag color(String color) {
+  public NewTagDto color(String color) {
     this.color = JsonNullable.of(color);
     return this;
   }
@@ -122,7 +69,7 @@ public class DocTag {
     this.color = color;
   }
 
-  public DocTag match(String match) {
+  public NewTagDto match(String match) {
     this.match = JsonNullable.of(match);
     return this;
   }
@@ -142,7 +89,7 @@ public class DocTag {
     this.match = match;
   }
 
-  public DocTag matchingAlgorithm(Long matchingAlgorithm) {
+  public NewTagDto matchingAlgorithm(Long matchingAlgorithm) {
     this.matchingAlgorithm = matchingAlgorithm;
     return this;
   }
@@ -162,7 +109,7 @@ public class DocTag {
     this.matchingAlgorithm = matchingAlgorithm;
   }
 
-  public DocTag isInsensitive(Boolean isInsensitive) {
+  public NewTagDto isInsensitive(Boolean isInsensitive) {
     this.isInsensitive = isInsensitive;
     return this;
   }
@@ -182,7 +129,7 @@ public class DocTag {
     this.isInsensitive = isInsensitive;
   }
 
-  public DocTag isInboxTag(Boolean isInboxTag) {
+  public NewTagDto isInboxTag(Boolean isInboxTag) {
     this.isInboxTag = isInboxTag;
     return this;
   }
@@ -202,26 +149,6 @@ public class DocTag {
     this.isInboxTag = isInboxTag;
   }
 
-  public DocTag documentCount(Long documentCount) {
-    this.documentCount = documentCount;
-    return this;
-  }
-
-  /**
-   * Get documentCount
-   * @return documentCount
-  */
-  
-  @Schema(name = "document_count", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("document_count")
-  public Long getDocumentCount() {
-    return documentCount;
-  }
-
-  public void setDocumentCount(Long documentCount) {
-    this.documentCount = documentCount;
-  }
-
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -230,16 +157,13 @@ public class DocTag {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    DocTag docTag = (DocTag) o;
-    return Objects.equals(this.id, docTag.id) &&
-        equalsNullable(this.slug, docTag.slug) &&
-        equalsNullable(this.name, docTag.name) &&
-        equalsNullable(this.color, docTag.color) &&
-        equalsNullable(this.match, docTag.match) &&
-        Objects.equals(this.matchingAlgorithm, docTag.matchingAlgorithm) &&
-        Objects.equals(this.isInsensitive, docTag.isInsensitive) &&
-        Objects.equals(this.isInboxTag, docTag.isInboxTag) &&
-        Objects.equals(this.documentCount, docTag.documentCount);
+    NewTagDto newTagDto = (NewTagDto) o;
+    return equalsNullable(this.name, newTagDto.name) &&
+        equalsNullable(this.color, newTagDto.color) &&
+        equalsNullable(this.match, newTagDto.match) &&
+        Objects.equals(this.matchingAlgorithm, newTagDto.matchingAlgorithm) &&
+        Objects.equals(this.isInsensitive, newTagDto.isInsensitive) &&
+        Objects.equals(this.isInboxTag, newTagDto.isInboxTag);
   }
 
   private static <T> boolean equalsNullable(JsonNullable<T> a, JsonNullable<T> b) {
@@ -248,7 +172,7 @@ public class DocTag {
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, hashCodeNullable(slug), hashCodeNullable(name), hashCodeNullable(color), hashCodeNullable(match), matchingAlgorithm, isInsensitive, isInboxTag, documentCount);
+    return Objects.hash(hashCodeNullable(name), hashCodeNullable(color), hashCodeNullable(match), matchingAlgorithm, isInsensitive, isInboxTag);
   }
 
   private static <T> int hashCodeNullable(JsonNullable<T> a) {
@@ -261,16 +185,13 @@ public class DocTag {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class DocTag {\n");
-    sb.append("    id: ").append(toIndentedString(id)).append("\n");
-    sb.append("    slug: ").append(toIndentedString(slug)).append("\n");
+    sb.append("class NewTag {\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    color: ").append(toIndentedString(color)).append("\n");
     sb.append("    match: ").append(toIndentedString(match)).append("\n");
     sb.append("    matchingAlgorithm: ").append(toIndentedString(matchingAlgorithm)).append("\n");
     sb.append("    isInsensitive: ").append(toIndentedString(isInsensitive)).append("\n");
     sb.append("    isInboxTag: ").append(toIndentedString(isInboxTag)).append("\n");
-    sb.append("    documentCount: ").append(toIndentedString(documentCount)).append("\n");
     sb.append("}");
     return sb.toString();
   }

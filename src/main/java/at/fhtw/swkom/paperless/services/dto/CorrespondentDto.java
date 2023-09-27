@@ -1,30 +1,28 @@
 package at.fhtw.swkom.paperless.services.dto;
 
-import java.net.URI;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonCreator;
+
 import java.time.OffsetDateTime;
 import java.util.Arrays;
 import org.openapitools.jackson.nullable.JsonNullable;
 import org.springframework.format.annotation.DateTimeFormat;
-import java.util.NoSuchElementException;
-import org.openapitools.jackson.nullable.JsonNullable;
-import java.time.OffsetDateTime;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.*;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 
-import java.util.*;
 import jakarta.annotation.Generated;
 
 /**
- * NewCorrespondent
+ * Correspondent
  */
 
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen")
-public class NewCorrespondent {
+public class CorrespondentDto {
+
+  private Long id;
+
+  private JsonNullable<String> slug = JsonNullable.<String>undefined();
 
   private JsonNullable<String> name = JsonNullable.<String>undefined();
 
@@ -39,7 +37,47 @@ public class NewCorrespondent {
   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
   private OffsetDateTime lastCorrespondence;
 
-  public NewCorrespondent name(String name) {
+  public CorrespondentDto id(Long id) {
+    this.id = id;
+    return this;
+  }
+
+  /**
+   * Get id
+   * @return id
+  */
+  
+  @Schema(name = "id", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("id")
+  public Long getId() {
+    return id;
+  }
+
+  public void setId(Long id) {
+    this.id = id;
+  }
+
+  public CorrespondentDto slug(String slug) {
+    this.slug = JsonNullable.of(slug);
+    return this;
+  }
+
+  /**
+   * Get slug
+   * @return slug
+  */
+  
+  @Schema(name = "slug", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("slug")
+  public JsonNullable<String> getSlug() {
+    return slug;
+  }
+
+  public void setSlug(JsonNullable<String> slug) {
+    this.slug = slug;
+  }
+
+  public CorrespondentDto name(String name) {
     this.name = JsonNullable.of(name);
     return this;
   }
@@ -59,7 +97,7 @@ public class NewCorrespondent {
     this.name = name;
   }
 
-  public NewCorrespondent match(String match) {
+  public CorrespondentDto match(String match) {
     this.match = JsonNullable.of(match);
     return this;
   }
@@ -79,7 +117,7 @@ public class NewCorrespondent {
     this.match = match;
   }
 
-  public NewCorrespondent matchingAlgorithm(Long matchingAlgorithm) {
+  public CorrespondentDto matchingAlgorithm(Long matchingAlgorithm) {
     this.matchingAlgorithm = matchingAlgorithm;
     return this;
   }
@@ -99,7 +137,7 @@ public class NewCorrespondent {
     this.matchingAlgorithm = matchingAlgorithm;
   }
 
-  public NewCorrespondent isInsensitive(Boolean isInsensitive) {
+  public CorrespondentDto isInsensitive(Boolean isInsensitive) {
     this.isInsensitive = isInsensitive;
     return this;
   }
@@ -119,7 +157,7 @@ public class NewCorrespondent {
     this.isInsensitive = isInsensitive;
   }
 
-  public NewCorrespondent documentCount(Long documentCount) {
+  public CorrespondentDto documentCount(Long documentCount) {
     this.documentCount = documentCount;
     return this;
   }
@@ -139,7 +177,7 @@ public class NewCorrespondent {
     this.documentCount = documentCount;
   }
 
-  public NewCorrespondent lastCorrespondence(OffsetDateTime lastCorrespondence) {
+  public CorrespondentDto lastCorrespondence(OffsetDateTime lastCorrespondence) {
     this.lastCorrespondence = lastCorrespondence;
     return this;
   }
@@ -167,13 +205,15 @@ public class NewCorrespondent {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    NewCorrespondent newCorrespondent = (NewCorrespondent) o;
-    return equalsNullable(this.name, newCorrespondent.name) &&
-        equalsNullable(this.match, newCorrespondent.match) &&
-        Objects.equals(this.matchingAlgorithm, newCorrespondent.matchingAlgorithm) &&
-        Objects.equals(this.isInsensitive, newCorrespondent.isInsensitive) &&
-        Objects.equals(this.documentCount, newCorrespondent.documentCount) &&
-        Objects.equals(this.lastCorrespondence, newCorrespondent.lastCorrespondence);
+    CorrespondentDto correspondentDto = (CorrespondentDto) o;
+    return Objects.equals(this.id, correspondentDto.id) &&
+        equalsNullable(this.slug, correspondentDto.slug) &&
+        equalsNullable(this.name, correspondentDto.name) &&
+        equalsNullable(this.match, correspondentDto.match) &&
+        Objects.equals(this.matchingAlgorithm, correspondentDto.matchingAlgorithm) &&
+        Objects.equals(this.isInsensitive, correspondentDto.isInsensitive) &&
+        Objects.equals(this.documentCount, correspondentDto.documentCount) &&
+        Objects.equals(this.lastCorrespondence, correspondentDto.lastCorrespondence);
   }
 
   private static <T> boolean equalsNullable(JsonNullable<T> a, JsonNullable<T> b) {
@@ -182,7 +222,7 @@ public class NewCorrespondent {
 
   @Override
   public int hashCode() {
-    return Objects.hash(hashCodeNullable(name), hashCodeNullable(match), matchingAlgorithm, isInsensitive, documentCount, lastCorrespondence);
+    return Objects.hash(id, hashCodeNullable(slug), hashCodeNullable(name), hashCodeNullable(match), matchingAlgorithm, isInsensitive, documentCount, lastCorrespondence);
   }
 
   private static <T> int hashCodeNullable(JsonNullable<T> a) {
@@ -195,7 +235,9 @@ public class NewCorrespondent {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class NewCorrespondent {\n");
+    sb.append("class Correspondent {\n");
+    sb.append("    id: ").append(toIndentedString(id)).append("\n");
+    sb.append("    slug: ").append(toIndentedString(slug)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    match: ").append(toIndentedString(match)).append("\n");
     sb.append("    matchingAlgorithm: ").append(toIndentedString(matchingAlgorithm)).append("\n");

@@ -5,16 +5,16 @@
  */
 package at.fhtw.swkom.paperless.controller;
 
-import at.fhtw.swkom.paperless.services.dto.Correspondent;
+import at.fhtw.swkom.paperless.services.dto.CorrespondentDto;
 import org.springframework.format.annotation.DateTimeFormat;
-import at.fhtw.swkom.paperless.services.dto.DocTag;
-import at.fhtw.swkom.paperless.services.dto.Document;
-import at.fhtw.swkom.paperless.services.dto.DocumentType;
-import at.fhtw.swkom.paperless.services.dto.NewCorrespondent;
-import at.fhtw.swkom.paperless.services.dto.NewDocumentType;
-import at.fhtw.swkom.paperless.services.dto.NewTag;
+import at.fhtw.swkom.paperless.services.dto.DocTagDto;
+import at.fhtw.swkom.paperless.services.dto.DocumentDto;
+import at.fhtw.swkom.paperless.services.dto.DocumentTypeDto;
+import at.fhtw.swkom.paperless.services.dto.NewCorrespondentDto;
+import at.fhtw.swkom.paperless.services.dto.NewDocumentTypeDto;
+import at.fhtw.swkom.paperless.services.dto.NewTagDto;
 import java.time.OffsetDateTime;
-import at.fhtw.swkom.paperless.services.dto.UserInfo;
+import at.fhtw.swkom.paperless.services.dto.UserInfoDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -118,7 +118,7 @@ public interface PaperlessApi {
     )
     
     default Mono<ResponseEntity<Void>> createCorrespondent(
-        @Parameter(name = "NewCorrespondent", description = "") @Valid @RequestBody(required = false) Mono<NewCorrespondent> newCorrespondent,
+        @Parameter(name = "NewCorrespondent", description = "") @Valid @RequestBody(required = false) Mono<NewCorrespondentDto> newCorrespondent,
         @Parameter(hidden = true) final ServerWebExchange exchange
     ) {
         Mono<Void> result = Mono.empty();
@@ -148,7 +148,7 @@ public interface PaperlessApi {
     )
     
     default Mono<ResponseEntity<Void>> createDocumentType(
-        @Parameter(name = "NewDocumentType", description = "") @Valid @RequestBody(required = false) Mono<NewDocumentType> newDocumentType,
+        @Parameter(name = "NewDocumentType", description = "") @Valid @RequestBody(required = false) Mono<NewDocumentTypeDto> newDocumentType,
         @Parameter(hidden = true) final ServerWebExchange exchange
     ) {
         Mono<Void> result = Mono.empty();
@@ -178,7 +178,7 @@ public interface PaperlessApi {
     )
     
     default Mono<ResponseEntity<Void>> createTag(
-        @Parameter(name = "NewTag", description = "") @Valid @RequestBody(required = false) Mono<NewTag> newTag,
+        @Parameter(name = "NewTag", description = "") @Valid @RequestBody(required = false) Mono<NewTagDto> newTag,
         @Parameter(hidden = true) final ServerWebExchange exchange
     ) {
         Mono<Void> result = Mono.empty();
@@ -566,7 +566,7 @@ public interface PaperlessApi {
     )
     
     default Mono<ResponseEntity<Void>> getToken(
-        @Parameter(name = "UserInfo", description = "") @Valid @RequestBody(required = false) Mono<UserInfo> userInfo,
+        @Parameter(name = "UserInfo", description = "") @Valid @RequestBody(required = false) Mono<UserInfoDto> userInfo,
         @Parameter(hidden = true) final ServerWebExchange exchange
     ) {
         Mono<Void> result = Mono.empty();
@@ -652,7 +652,7 @@ public interface PaperlessApi {
     
     default Mono<ResponseEntity<Void>> updateCorrespondent(
         @Parameter(name = "id", description = "", required = true, in = ParameterIn.PATH) @PathVariable("id") Integer id,
-        @Parameter(name = "Correspondent", description = "") @Valid @RequestBody(required = false) Mono<Correspondent> correspondent,
+        @Parameter(name = "Correspondent", description = "") @Valid @RequestBody(required = false) Mono<CorrespondentDto> correspondent,
         @Parameter(hidden = true) final ServerWebExchange exchange
     ) {
         Mono<Void> result = Mono.empty();
@@ -684,7 +684,7 @@ public interface PaperlessApi {
     
     default Mono<ResponseEntity<Void>> updateDocument(
         @Parameter(name = "id", description = "", required = true, in = ParameterIn.PATH) @PathVariable("id") Integer id,
-        @Parameter(name = "Document", description = "") @Valid @RequestBody(required = false) Mono<Document> document,
+        @Parameter(name = "Document", description = "") @Valid @RequestBody(required = false) Mono<DocumentDto> document,
         @Parameter(hidden = true) final ServerWebExchange exchange
     ) {
         Mono<Void> result = Mono.empty();
@@ -716,7 +716,7 @@ public interface PaperlessApi {
     
     default Mono<ResponseEntity<Void>> updateDocumentType(
         @Parameter(name = "id", description = "", required = true, in = ParameterIn.PATH) @PathVariable("id") Integer id,
-        @Parameter(name = "DocumentType", description = "") @Valid @RequestBody(required = false) Mono<DocumentType> documentType,
+        @Parameter(name = "DocumentType", description = "") @Valid @RequestBody(required = false) Mono<DocumentTypeDto> documentType,
         @Parameter(hidden = true) final ServerWebExchange exchange
     ) {
         Mono<Void> result = Mono.empty();
@@ -748,7 +748,7 @@ public interface PaperlessApi {
     
     default Mono<ResponseEntity<Void>> updateTag(
         @Parameter(name = "id", description = "", required = true, in = ParameterIn.PATH) @PathVariable("id") Integer id,
-        @Parameter(name = "DocTag", description = "") @Valid @RequestBody(required = false) Mono<DocTag> docTag,
+        @Parameter(name = "DocTag", description = "") @Valid @RequestBody(required = false) Mono<DocTagDto> docTag,
         @Parameter(hidden = true) final ServerWebExchange exchange
     ) {
         Mono<Void> result = Mono.empty();
