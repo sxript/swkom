@@ -1,20 +1,13 @@
 package at.fhtw.swkom.paperless.services.dto;
 
-import java.net.URI;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonCreator;
+
 import java.util.Arrays;
 import org.openapitools.jackson.nullable.JsonNullable;
-import java.util.NoSuchElementException;
-import org.openapitools.jackson.nullable.JsonNullable;
-import java.time.OffsetDateTime;
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.*;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 
-import java.util.*;
 import jakarta.annotation.Generated;
 
 /**
@@ -22,13 +15,13 @@ import jakarta.annotation.Generated;
  */
 
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen")
-public class UserInfo {
+public class UserInfoDto {
 
   private JsonNullable<String> username = JsonNullable.<String>undefined();
 
   private JsonNullable<String> password = JsonNullable.<String>undefined();
 
-  public UserInfo username(String username) {
+  public UserInfoDto username(String username) {
     this.username = JsonNullable.of(username);
     return this;
   }
@@ -48,7 +41,7 @@ public class UserInfo {
     this.username = username;
   }
 
-  public UserInfo password(String password) {
+  public UserInfoDto password(String password) {
     this.password = JsonNullable.of(password);
     return this;
   }
@@ -76,9 +69,9 @@ public class UserInfo {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    UserInfo userInfo = (UserInfo) o;
-    return equalsNullable(this.username, userInfo.username) &&
-        equalsNullable(this.password, userInfo.password);
+    UserInfoDto userInfoDto = (UserInfoDto) o;
+    return equalsNullable(this.username, userInfoDto.username) &&
+        equalsNullable(this.password, userInfoDto.password);
   }
 
   private static <T> boolean equalsNullable(JsonNullable<T> a, JsonNullable<T> b) {
