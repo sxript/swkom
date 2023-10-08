@@ -2,16 +2,20 @@ package at.fhtw.swkom.paperless.services.entities;
 
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
-@Getter@Setter
+
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class UserInfo {
-    @Id@GeneratedValue(strategy = GenerationType.IDENTITY, generator = "native")
-    @Column
-    private String username;
-    @Column
-    private String password;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private int id;
 
+    private String username;
+    private String password;
 }

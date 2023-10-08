@@ -2,59 +2,35 @@ package at.fhtw.swkom.paperless.services.entities;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.util.List;
 
+@Entity
 @Getter
 @Setter
-@Entity
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Document {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "native")
-    @Column
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
-    @Column
-    private int correspondent;
-
-    @Column(name = "document_type")
-    private int documentType;
-
-    @Column(name = "storage_path")
-    private int storagePath;
-
-    @Column
     private String title;
-
-    @Column
     private String content;
+    private LocalDateTime createdAt;
 
-    @Column
-    private int[] tags;
+    @ManyToOne
+    @JoinColumn(name = "correspondent_id")
+    private Correspondent correspondent;
 
-    @NotNull
-    @Column
-    private Timestamp created;
+    @ManyToOne
+    @JoinColumn(name = "document_type_id")
+    private DocumentType documentType;
 
-    @NotNull
-    @Column(name = "created_date")
-    private Timestamp createdDate;
-
-    @NotNull
-    @Column
-    private Timestamp modified;
-
-    @NotNull
-    @Column
-    private Timestamp added;
-
-    @Column(name = "archive_serial_number")
-    private String archiveSerialNumber;
-
-    @Column(name = "original_file_name")
-    private String originalFileName;
-
-    @Column(name = "archived_file_name")
-    private String archivedFileName;
+    @ManyToMany
+    private List<DocTag> docTags;
 }
