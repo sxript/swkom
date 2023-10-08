@@ -25,5 +25,4 @@ public class PaperlessApplication {
     public Module jsonNullableModule() {
         return new JsonNullableModule();
     }
-
 }
