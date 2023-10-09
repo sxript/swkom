@@ -1,21 +1,30 @@
 package at.fhtw.swkom.paperless.services.dto;
 
+import java.net.URI;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
-
+import com.fasterxml.jackson.annotation.JsonCreator;
+import java.time.OffsetDateTime;
 import java.util.Arrays;
 import org.openapitools.jackson.nullable.JsonNullable;
+import org.springframework.format.annotation.DateTimeFormat;
+import java.util.NoSuchElementException;
+import org.openapitools.jackson.nullable.JsonNullable;
+import java.time.OffsetDateTime;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.*;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 
+import java.util.*;
 import jakarta.annotation.Generated;
 
 /**
- * DocTag
+ * Correspondent
  */
 
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen")
-public class DocTagDto {
+public class Correspondent {
 
   private Long id;
 
@@ -23,19 +32,18 @@ public class DocTagDto {
 
   private JsonNullable<String> name = JsonNullable.<String>undefined();
 
-  private JsonNullable<String> color = JsonNullable.<String>undefined();
-
   private JsonNullable<String> match = JsonNullable.<String>undefined();
 
   private Long matchingAlgorithm;
 
   private Boolean isInsensitive;
 
-  private Boolean isInboxTag;
-
   private Long documentCount;
 
-  public DocTagDto id(Long id) {
+  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+  private OffsetDateTime lastCorrespondence;
+
+  public Correspondent id(Long id) {
     this.id = id;
     return this;
   }
@@ -55,7 +63,7 @@ public class DocTagDto {
     this.id = id;
   }
 
-  public DocTagDto slug(String slug) {
+  public Correspondent slug(String slug) {
     this.slug = JsonNullable.of(slug);
     return this;
   }
@@ -75,7 +83,7 @@ public class DocTagDto {
     this.slug = slug;
   }
 
-  public DocTagDto name(String name) {
+  public Correspondent name(String name) {
     this.name = JsonNullable.of(name);
     return this;
   }
@@ -95,27 +103,7 @@ public class DocTagDto {
     this.name = name;
   }
 
-  public DocTagDto color(String color) {
-    this.color = JsonNullable.of(color);
-    return this;
-  }
-
-  /**
-   * Get color
-   * @return color
-  */
-  
-  @Schema(name = "color", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("color")
-  public JsonNullable<String> getColor() {
-    return color;
-  }
-
-  public void setColor(JsonNullable<String> color) {
-    this.color = color;
-  }
-
-  public DocTagDto match(String match) {
+  public Correspondent match(String match) {
     this.match = JsonNullable.of(match);
     return this;
   }
@@ -135,7 +123,7 @@ public class DocTagDto {
     this.match = match;
   }
 
-  public DocTagDto matchingAlgorithm(Long matchingAlgorithm) {
+  public Correspondent matchingAlgorithm(Long matchingAlgorithm) {
     this.matchingAlgorithm = matchingAlgorithm;
     return this;
   }
@@ -155,7 +143,7 @@ public class DocTagDto {
     this.matchingAlgorithm = matchingAlgorithm;
   }
 
-  public DocTagDto isInsensitive(Boolean isInsensitive) {
+  public Correspondent isInsensitive(Boolean isInsensitive) {
     this.isInsensitive = isInsensitive;
     return this;
   }
@@ -175,27 +163,7 @@ public class DocTagDto {
     this.isInsensitive = isInsensitive;
   }
 
-  public DocTagDto isInboxTag(Boolean isInboxTag) {
-    this.isInboxTag = isInboxTag;
-    return this;
-  }
-
-  /**
-   * Get isInboxTag
-   * @return isInboxTag
-  */
-  
-  @Schema(name = "is_inbox_tag", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("is_inbox_tag")
-  public Boolean getIsInboxTag() {
-    return isInboxTag;
-  }
-
-  public void setIsInboxTag(Boolean isInboxTag) {
-    this.isInboxTag = isInboxTag;
-  }
-
-  public DocTagDto documentCount(Long documentCount) {
+  public Correspondent documentCount(Long documentCount) {
     this.documentCount = documentCount;
     return this;
   }
@@ -215,6 +183,26 @@ public class DocTagDto {
     this.documentCount = documentCount;
   }
 
+  public Correspondent lastCorrespondence(OffsetDateTime lastCorrespondence) {
+    this.lastCorrespondence = lastCorrespondence;
+    return this;
+  }
+
+  /**
+   * Get lastCorrespondence
+   * @return lastCorrespondence
+  */
+  @Valid 
+  @Schema(name = "last_correspondence", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("last_correspondence")
+  public OffsetDateTime getLastCorrespondence() {
+    return lastCorrespondence;
+  }
+
+  public void setLastCorrespondence(OffsetDateTime lastCorrespondence) {
+    this.lastCorrespondence = lastCorrespondence;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -223,16 +211,15 @@ public class DocTagDto {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    DocTagDto docTagDto = (DocTagDto) o;
-    return Objects.equals(this.id, docTagDto.id) &&
-        equalsNullable(this.slug, docTagDto.slug) &&
-        equalsNullable(this.name, docTagDto.name) &&
-        equalsNullable(this.color, docTagDto.color) &&
-        equalsNullable(this.match, docTagDto.match) &&
-        Objects.equals(this.matchingAlgorithm, docTagDto.matchingAlgorithm) &&
-        Objects.equals(this.isInsensitive, docTagDto.isInsensitive) &&
-        Objects.equals(this.isInboxTag, docTagDto.isInboxTag) &&
-        Objects.equals(this.documentCount, docTagDto.documentCount);
+    Correspondent correspondent = (Correspondent) o;
+    return Objects.equals(this.id, correspondent.id) &&
+        equalsNullable(this.slug, correspondent.slug) &&
+        equalsNullable(this.name, correspondent.name) &&
+        equalsNullable(this.match, correspondent.match) &&
+        Objects.equals(this.matchingAlgorithm, correspondent.matchingAlgorithm) &&
+        Objects.equals(this.isInsensitive, correspondent.isInsensitive) &&
+        Objects.equals(this.documentCount, correspondent.documentCount) &&
+        Objects.equals(this.lastCorrespondence, correspondent.lastCorrespondence);
   }
 
   private static <T> boolean equalsNullable(JsonNullable<T> a, JsonNullable<T> b) {
@@ -241,7 +228,7 @@ public class DocTagDto {
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, hashCodeNullable(slug), hashCodeNullable(name), hashCodeNullable(color), hashCodeNullable(match), matchingAlgorithm, isInsensitive, isInboxTag, documentCount);
+    return Objects.hash(id, hashCodeNullable(slug), hashCodeNullable(name), hashCodeNullable(match), matchingAlgorithm, isInsensitive, documentCount, lastCorrespondence);
   }
 
   private static <T> int hashCodeNullable(JsonNullable<T> a) {
@@ -254,16 +241,15 @@ public class DocTagDto {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class DocTag {\n");
+    sb.append("class Correspondent {\n");
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    slug: ").append(toIndentedString(slug)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
-    sb.append("    color: ").append(toIndentedString(color)).append("\n");
     sb.append("    match: ").append(toIndentedString(match)).append("\n");
     sb.append("    matchingAlgorithm: ").append(toIndentedString(matchingAlgorithm)).append("\n");
     sb.append("    isInsensitive: ").append(toIndentedString(isInsensitive)).append("\n");
-    sb.append("    isInboxTag: ").append(toIndentedString(isInboxTag)).append("\n");
     sb.append("    documentCount: ").append(toIndentedString(documentCount)).append("\n");
+    sb.append("    lastCorrespondence: ").append(toIndentedString(lastCorrespondence)).append("\n");
     sb.append("}");
     return sb.toString();
   }

@@ -1,18 +1,24 @@
 package at.fhtw.swkom.paperless.services.dto;
 
+import java.net.URI;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
-
+import com.fasterxml.jackson.annotation.JsonCreator;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import org.openapitools.jackson.nullable.JsonNullable;
 import org.springframework.format.annotation.DateTimeFormat;
+import java.util.NoSuchElementException;
+import org.openapitools.jackson.nullable.JsonNullable;
+import java.time.OffsetDateTime;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.*;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 
+import java.util.*;
 import jakarta.annotation.Generated;
 
 /**
@@ -20,7 +26,7 @@ import jakarta.annotation.Generated;
  */
 
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen")
-public class DocumentDto {
+public class Document {
 
   private Integer id;
 
@@ -55,7 +61,7 @@ public class DocumentDto {
 
   private JsonNullable<String> archivedFileName = JsonNullable.<String>undefined();
 
-  public DocumentDto id(Integer id) {
+  public Document id(Integer id) {
     this.id = id;
     return this;
   }
@@ -75,7 +81,7 @@ public class DocumentDto {
     this.id = id;
   }
 
-  public DocumentDto correspondent(Integer correspondent) {
+  public Document correspondent(Integer correspondent) {
     this.correspondent = JsonNullable.of(correspondent);
     return this;
   }
@@ -95,7 +101,7 @@ public class DocumentDto {
     this.correspondent = correspondent;
   }
 
-  public DocumentDto documentType(Integer documentType) {
+  public Document documentType(Integer documentType) {
     this.documentType = JsonNullable.of(documentType);
     return this;
   }
@@ -115,7 +121,7 @@ public class DocumentDto {
     this.documentType = documentType;
   }
 
-  public DocumentDto storagePath(Integer storagePath) {
+  public Document storagePath(Integer storagePath) {
     this.storagePath = JsonNullable.of(storagePath);
     return this;
   }
@@ -135,7 +141,7 @@ public class DocumentDto {
     this.storagePath = storagePath;
   }
 
-  public DocumentDto title(String title) {
+  public Document title(String title) {
     this.title = JsonNullable.of(title);
     return this;
   }
@@ -155,7 +161,7 @@ public class DocumentDto {
     this.title = title;
   }
 
-  public DocumentDto content(String content) {
+  public Document content(String content) {
     this.content = JsonNullable.of(content);
     return this;
   }
@@ -175,12 +181,12 @@ public class DocumentDto {
     this.content = content;
   }
 
-  public DocumentDto tags(List<Integer> tags) {
+  public Document tags(List<Integer> tags) {
     this.tags = JsonNullable.of(tags);
     return this;
   }
 
-  public DocumentDto addTagsItem(Integer tagsItem) {
+  public Document addTagsItem(Integer tagsItem) {
     if (this.tags == null || !this.tags.isPresent()) {
       this.tags = JsonNullable.of(new ArrayList<>());
     }
@@ -203,7 +209,7 @@ public class DocumentDto {
     this.tags = tags;
   }
 
-  public DocumentDto created(OffsetDateTime created) {
+  public Document created(OffsetDateTime created) {
     this.created = created;
     return this;
   }
@@ -223,7 +229,7 @@ public class DocumentDto {
     this.created = created;
   }
 
-  public DocumentDto createdDate(OffsetDateTime createdDate) {
+  public Document createdDate(OffsetDateTime createdDate) {
     this.createdDate = createdDate;
     return this;
   }
@@ -243,7 +249,7 @@ public class DocumentDto {
     this.createdDate = createdDate;
   }
 
-  public DocumentDto modified(OffsetDateTime modified) {
+  public Document modified(OffsetDateTime modified) {
     this.modified = modified;
     return this;
   }
@@ -263,7 +269,7 @@ public class DocumentDto {
     this.modified = modified;
   }
 
-  public DocumentDto added(OffsetDateTime added) {
+  public Document added(OffsetDateTime added) {
     this.added = added;
     return this;
   }
@@ -283,7 +289,7 @@ public class DocumentDto {
     this.added = added;
   }
 
-  public DocumentDto archiveSerialNumber(String archiveSerialNumber) {
+  public Document archiveSerialNumber(String archiveSerialNumber) {
     this.archiveSerialNumber = JsonNullable.of(archiveSerialNumber);
     return this;
   }
@@ -303,7 +309,7 @@ public class DocumentDto {
     this.archiveSerialNumber = archiveSerialNumber;
   }
 
-  public DocumentDto originalFileName(String originalFileName) {
+  public Document originalFileName(String originalFileName) {
     this.originalFileName = JsonNullable.of(originalFileName);
     return this;
   }
@@ -323,7 +329,7 @@ public class DocumentDto {
     this.originalFileName = originalFileName;
   }
 
-  public DocumentDto archivedFileName(String archivedFileName) {
+  public Document archivedFileName(String archivedFileName) {
     this.archivedFileName = JsonNullable.of(archivedFileName);
     return this;
   }
@@ -351,21 +357,21 @@ public class DocumentDto {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    DocumentDto documentDto = (DocumentDto) o;
-    return Objects.equals(this.id, documentDto.id) &&
-        equalsNullable(this.correspondent, documentDto.correspondent) &&
-        equalsNullable(this.documentType, documentDto.documentType) &&
-        equalsNullable(this.storagePath, documentDto.storagePath) &&
-        equalsNullable(this.title, documentDto.title) &&
-        equalsNullable(this.content, documentDto.content) &&
-        equalsNullable(this.tags, documentDto.tags) &&
-        Objects.equals(this.created, documentDto.created) &&
-        Objects.equals(this.createdDate, documentDto.createdDate) &&
-        Objects.equals(this.modified, documentDto.modified) &&
-        Objects.equals(this.added, documentDto.added) &&
-        equalsNullable(this.archiveSerialNumber, documentDto.archiveSerialNumber) &&
-        equalsNullable(this.originalFileName, documentDto.originalFileName) &&
-        equalsNullable(this.archivedFileName, documentDto.archivedFileName);
+    Document document = (Document) o;
+    return Objects.equals(this.id, document.id) &&
+        equalsNullable(this.correspondent, document.correspondent) &&
+        equalsNullable(this.documentType, document.documentType) &&
+        equalsNullable(this.storagePath, document.storagePath) &&
+        equalsNullable(this.title, document.title) &&
+        equalsNullable(this.content, document.content) &&
+        equalsNullable(this.tags, document.tags) &&
+        Objects.equals(this.created, document.created) &&
+        Objects.equals(this.createdDate, document.createdDate) &&
+        Objects.equals(this.modified, document.modified) &&
+        Objects.equals(this.added, document.added) &&
+        equalsNullable(this.archiveSerialNumber, document.archiveSerialNumber) &&
+        equalsNullable(this.originalFileName, document.originalFileName) &&
+        equalsNullable(this.archivedFileName, document.archivedFileName);
   }
 
   private static <T> boolean equalsNullable(JsonNullable<T> a, JsonNullable<T> b) {
