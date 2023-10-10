@@ -23238,11 +23238,11 @@ globalThis.$localize = Object.assign(globalThis.$localize || {}, { locale: "en-U
       // The list of file replacements can be found in `angular.json`.
       const environment = {
         production: false,
-        apiBaseUrl: 'localhost:8080/api/',
+        apiBaseUrl: 'http://localhost:8080/api/',
         apiVersion: '2',
         appTitle: 'Paperless-ngx',
         version: 'DEVELOPMENT',
-        webSocketHost: 'localhost:8080',
+        webSocketHost: 'localhost:8081',
         webSocketProtocol: 'ws:',
         webSocketBaseUrl: '/ws/'
       };
