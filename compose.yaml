@@ -1,4 +1,27 @@
 services:
+  paperless-api:
+    build: .
+    environment:
+      spring.datasource.url: "jdbc:postgresql://postgres:5432/mydatabase"
+      spring.datasource.username: "myuser"
+      spring.datasource.password: "secret"
+    ports:
+      - '8080:8080'
+    volumes:
+      - '.:/app'
+    depends_on:
+        - 'postgres'
+        - 'rabbitmq'
+  paperless-ui:
+    build: ./ui
+    environment:
+      - 'API_URL=http://paperless-api:8080'
+    ports:
+      - '8081:80'
+    volumes:
+      - '.:/app'
+    depends_on:
+      - 'paperless-api'
   postgres:
     image: 'postgres:latest'
     environment:
@@ -14,3 +37,5 @@ services:
       - 'RABBITMQ_DEFAULT_USER=myuser'
     ports:
       - '5672'
+    depends_on:
+      - 'postgres'
