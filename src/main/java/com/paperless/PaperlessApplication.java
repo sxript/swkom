@@ -21,7 +21,7 @@ public class PaperlessApplication {
         SpringApplication.run(PaperlessApplication.class, args);
     }
 
-    @Bean(name = "org.openapitools.PaperlessApplication.jsonNullableModule")
+    @Bean(name = "com.paperless.PaperlessApplication.jsonNullableModule")
     public Module jsonNullableModule() {
         return new JsonNullableModule();
     }
