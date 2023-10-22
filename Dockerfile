@@ -1,8 +1,11 @@
-FROM maven:3.8.3-openjdk-17 AS build
-COPY . /app
+FROM amazoncorretto:17-alpine-jdk
 WORKDIR /app
-RUN mvn clean package -DskipTests
+# Install Maven (if not already installed)
+RUN apk --no-cache add maven
+# copy sourcecode
+COPY . /app
+# Build the application --> skit tests for now
+RUN mvn package -DskipTests
 
-FROM openjdk:17
-COPY --from=build /app/target/*.jar /app.jar
-ENTRYPOINT ["java","-jar","/app.jar"]
+EXPOSE 8088
+ENTRYPOINT ["java","-jar","target/openapi-spring-1.0.jar"]
