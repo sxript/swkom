@@ -42,22 +42,27 @@ public class PaperlessApplication implements PaperlessApi {
     public ResponseEntity<Void> uploadDocument(String title, OffsetDateTime created, Integer documentType, List<Integer> tags, Integer correspondent, List<MultipartFile> document) {
 
 
-        String name = document.get(0).getOriginalFilename();
-        Document documentDTO = new Document();
+      try{
+          String name = document.get(0).getOriginalFilename();
+          Document documentDTO = new Document();
 
 
-        documentDTO.setTitle(JsonNullable.of(title == null ? name : title));
-        documentDTO.setOriginalFileName(JsonNullable.of(name));
-        documentDTO.setCreated(created);
-        documentDTO.setDocumentType(JsonNullable.of(documentType));
-        documentDTO.setTags(JsonNullable.of(tags));
-        documentDTO.setCorrespondent(JsonNullable.of(correspondent));
+          documentDTO.setTitle(JsonNullable.of(title == null ? name : title));
+          documentDTO.setOriginalFileName(JsonNullable.of(name));
+          documentDTO.setCreated(created);
+          documentDTO.setDocumentType(JsonNullable.of(documentType));
+          documentDTO.setTags(JsonNullable.of(tags));
+          documentDTO.setCorrespondent(JsonNullable.of(correspondent));
 
-        System.out.println(document.get(0).getOriginalFilename());
+          System.out.println(document.get(0).getOriginalFilename());
 
-        documentService.uploadDocument(documentDTO,document);
+          documentService.uploadDocument(documentDTO,document);
 
-        return new ResponseEntity<>(HttpStatus.OK);
+          return new ResponseEntity<>(HttpStatus.OK);
+
+      }catch (Exception e){
+          return ResponseEntity.internalServerError().build();
+      }
     }
 
 }
