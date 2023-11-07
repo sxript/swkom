@@ -4,11 +4,9 @@ import com.paperless.services.dto.Document;
 import com.paperless.persistence.entities.*;
 import com.paperless.persistence.repositories.*;
 import org.mapstruct.*;
-import org.mapstruct.factory.Mappers;
 import org.openapitools.jackson.nullable.JsonNullable;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.time.OffsetDateTime;
