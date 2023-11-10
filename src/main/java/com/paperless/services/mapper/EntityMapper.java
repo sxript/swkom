@@ -3,7 +3,7 @@ package com.paperless.services.mapper;
 import org.openapitools.jackson.nullable.JsonNullable;
 import org.springframework.stereotype.Service;
 
-@Service
+
 public interface EntityMapper<D, E> {
     E toEntity(D dto);
 
