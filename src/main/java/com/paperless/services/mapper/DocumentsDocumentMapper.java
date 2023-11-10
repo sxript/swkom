@@ -33,7 +33,8 @@ public abstract class DocumentsDocumentMapper implements EntityMapper<Document, 
     @Autowired
     private DocumentsDocumentTagsRepository documentTagsRepository;
 
-    @Mapping(target = "correspondent", source = "correspondent", qualifiedByName = "correspondentDto")
+
+  @Mapping(target = "correspondent", source = "correspondent", qualifiedByName = "correspondentDto")
     @Mapping(target = "documentType", source = "documentType", qualifiedByName = "documentTypeDto")
     @Mapping(target = "storagePath", source = "storagePath", qualifiedByName = "storagePathDto")
     @Mapping(target = "documentDocumentsDocumentTagses", source = "tags", qualifiedByName = "tagsDto")
@@ -49,63 +50,72 @@ public abstract class DocumentsDocumentMapper implements EntityMapper<Document, 
 
     @Named("correspondentEntity")
     JsonNullable<Integer> map(DocumentsCorrespondent correspondent) {
-        return correspondent != null ? JsonNullable.of(correspondent.getId()) : JsonNullable.undefined();
+        return correspondent!=null ? JsonNullable.of(correspondent.getId()) : JsonNullable.undefined();
     }
 
     @Named("documentTypeEntity")
     JsonNullable<Integer> map(DocumentsDocumenttype documentType) {
-        return documentType != null ? JsonNullable.of(documentType.getId()) : JsonNullable.undefined();
+        return documentType!=null ? JsonNullable.of(documentType.getId()) : JsonNullable.undefined();
     }
 
     @Named("storagePathEntity")
     JsonNullable<Integer> map(DocumentsStoragepath storagePath) {
-        return storagePath != null ? JsonNullable.of(storagePath.getId()) : JsonNullable.undefined();
+        return storagePath!=null ? JsonNullable.of(storagePath.getId()) : JsonNullable.undefined();
     }
 
     @Named("ownerEntity")
     JsonNullable<Integer> map(AuthUser owner) {
-        return owner != null ? JsonNullable.of(owner.getId()) : JsonNullable.undefined();
+        return owner!=null ? JsonNullable.of(owner.getId()) : JsonNullable.undefined();
     }
 
     @Named("tagsEntity")
     JsonNullable<List<Integer>> map(Set<DocumentsDocumentTags> tags) {
-        return tags != null ? JsonNullable.of(tags.stream().map(tag -> (int) tag.getId()).toList()) : JsonNullable.undefined();
+        return tags!=null ? JsonNullable.of( tags.stream().map( tag->(int)tag.getId() ).toList() ) : JsonNullable.undefined();
     }
 
-    // map created to createdDate (Date without the time)
     @Named("createdToCreatedDate")
     OffsetDateTime mapCreatedDate(OffsetDateTime value) {
-        return value != null ? value.withOffsetSameInstant(ZoneOffset.UTC).toLocalDate().atStartOfDay().atOffset(ZoneOffset.UTC) : null;
+        return value!=null ? value.withOffsetSameInstant(ZoneOffset.UTC).toLocalDate().atStartOfDay().atOffset(ZoneOffset.UTC) : null;
     }
 
     @Named("correspondentDto")
     DocumentsCorrespondent mapCorrespondent(JsonNullable<Integer> value) {
+        if(value==null || !value.isPresent() || value.get()==null) return null;
+
         return correspondentRepository.findById(value.get()).orElse(null);
     }
 
     @Named("documentTypeDto")
     DocumentsDocumenttype mapDocumentType(JsonNullable<Integer> value) {
+        if(value==null || !value.isPresent() || value.get()==null) return null;
+
         return documentTypeRepository.findById(value.get()).orElse(null);
     }
 
     @Named("storagePathDto")
     DocumentsStoragepath mapStoragePath(JsonNullable<Integer> value) {
+        if(value==null || !value.isPresent() || value.get()==null) return null;
+
         return storagePathRepository.findById(value.get()).orElse(null);
     }
 
     @Named("ownerDto")
     AuthUser mapOwner(JsonNullable<Integer> value) {
+        if(value==null || !value.isPresent() || value.get()==null) return null;
+
         return userRepository.findById(value.get()).orElse(null);
     }
 
     @Named("tagsDto")
     Set<DocumentsDocumentTags> mapDocTag(JsonNullable<List<Integer>> value) {
+        if(value==null || !value.isPresent() || value.get()==null) return null;
+
         return new HashSet<DocumentsDocumentTags>(documentTagsRepository.findAllById(value.get()));
     }
 
     @Named("archiveSerialNumberDto")
     Integer mapArchiveSerialNumber(JsonNullable<String> value) {
-        if (value == null || !value.isPresent() || value.get() == null) return null;
+        if(value==null || !value.isPresent() || value.get()==null) return null;
         return Integer.parseInt(value.get());
     }
 
