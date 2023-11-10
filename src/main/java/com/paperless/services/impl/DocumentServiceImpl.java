@@ -5,6 +5,7 @@ import com.paperless.persistence.repositories.DocumentsDocumentRepository;
 import com.paperless.services.dto.Document;
 import com.paperless.services.mapper.DocumentsDocumentMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -35,16 +36,16 @@ public class DocumentServiceImpl implements DocumentService {
         documentDTO.content("");
         documentDTO.setAdded(OffsetDateTime.now());
 
+        System.out.println(documentDTO);
 
         DocumentsDocument documentsEntity = documentMapper.toEntity(documentDTO);
+
 
 
         documentsEntity.setChecksum("checksum");
         documentsEntity.setStorageType("pdf");
         documentsEntity.setMimeType("pdf");
 
-
-        System.out.println(documentsEntity.toString());
 
         documentRepository.save(documentsEntity);
 
