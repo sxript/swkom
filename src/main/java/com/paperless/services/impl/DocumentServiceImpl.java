@@ -35,11 +35,13 @@ public class DocumentServiceImpl implements DocumentService {
         documentDTO.setModified(OffsetDateTime.now());
         documentDTO.content("");
         documentDTO.setAdded(OffsetDateTime.now());
+        documentDTO.setId(0);
 
         System.out.println(documentDTO);
 
         DocumentsDocument documentsEntity = documentMapper.toEntity(documentDTO);
 
+        System.out.println(documentsEntity);
 
 
         documentsEntity.setChecksum("checksum");
