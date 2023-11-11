@@ -57,10 +57,10 @@ public class AuthUser {
     private Set<AuthUserGroups> userAuthUserGroupses;
 
     @OneToMany(mappedBy = "owner")
-    private Set<DocumentsCorrespondent> ownerDocumentsCorrespondents;
+    private Set<Correspondent> ownerCorrespondents;
 
     @OneToMany(mappedBy = "owner")
-    private Set<DocumentsDocumenttype> ownerDocumentsDocumenttypes;
+    private Set<DocumentType> ownerDocumentTypes;
 
     @OneToMany(mappedBy = "owner")
     private Set<DocumentsStoragepath> ownerDocumentsStoragepaths;
@@ -78,7 +78,7 @@ public class AuthUser {
     private Set<PaperlessMailMailaccount> ownerPaperlessMailMailaccounts;
 
     @OneToMany(mappedBy = "owner")
-    private Set<DocumentsDocument> ownerDocumentsDocuments;
+    private Set<Document> ownerDocuments;
 
     @OneToMany(mappedBy = "user")
     private Set<DocumentsNote> userDocumentsNotes;
@@ -191,22 +191,22 @@ public class AuthUser {
         this.userAuthUserGroupses = userAuthUserGroupses;
     }
 
-    public Set<DocumentsCorrespondent> getOwnerDocumentsCorrespondents() {
-        return ownerDocumentsCorrespondents;
+    public Set<Correspondent> getOwnerDocumentsCorrespondents() {
+        return ownerCorrespondents;
     }
 
     public void setOwnerDocumentsCorrespondents(
-            final Set<DocumentsCorrespondent> ownerDocumentsCorrespondents) {
-        this.ownerDocumentsCorrespondents = ownerDocumentsCorrespondents;
+            final Set<Correspondent> ownerCorrespondents) {
+        this.ownerCorrespondents = ownerCorrespondents;
     }
 
-    public Set<DocumentsDocumenttype> getOwnerDocumentsDocumenttypes() {
-        return ownerDocumentsDocumenttypes;
+    public Set<DocumentType> getOwnerDocumentsDocumenttypes() {
+        return ownerDocumentTypes;
     }
 
     public void setOwnerDocumentsDocumenttypes(
-            final Set<DocumentsDocumenttype> ownerDocumentsDocumenttypes) {
-        this.ownerDocumentsDocumenttypes = ownerDocumentsDocumenttypes;
+            final Set<DocumentType> ownerDocumentTypes) {
+        this.ownerDocumentTypes = ownerDocumentTypes;
     }
 
     public Set<DocumentsStoragepath> getOwnerDocumentsStoragepaths() {
@@ -253,12 +253,12 @@ public class AuthUser {
         this.ownerPaperlessMailMailaccounts = ownerPaperlessMailMailaccounts;
     }
 
-    public Set<DocumentsDocument> getOwnerDocumentsDocuments() {
-        return ownerDocumentsDocuments;
+    public Set<Document> getOwnerDocumentsDocuments() {
+        return ownerDocuments;
     }
 
-    public void setOwnerDocumentsDocuments(final Set<DocumentsDocument> ownerDocumentsDocuments) {
-        this.ownerDocumentsDocuments = ownerDocumentsDocuments;
+    public void setOwnerDocumentsDocuments(final Set<Document> ownerDocuments) {
+        this.ownerDocuments = ownerDocuments;
     }
 
     public Set<DocumentsNote> getUserDocumentsNotes() {

@@ -1,6 +1,6 @@
 package com.paperless.services.mapper;
 
-import com.paperless.services.dto.Document;
+import com.paperless.services.dto.DocumentDTO;
 import com.paperless.persistence.entities.*;
 import com.paperless.persistence.repositories.*;
 import org.mapstruct.*;
@@ -20,7 +20,7 @@ import java.util.Set;
         unmappedTargetPolicy = ReportingPolicy.IGNORE,
         nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
 @Service
-public abstract class DocumentsDocumentMapper implements EntityMapper<Document, DocumentsDocument> {
+public abstract class DocumentsDocumentMapper implements EntityMapper<DocumentDTO, Document> {
 
     @Autowired
     private DocumentsCorrespondentRepository correspondentRepository;
@@ -39,22 +39,22 @@ public abstract class DocumentsDocumentMapper implements EntityMapper<Document, 
     @Mapping(target = "storagePath", source = "storagePath", qualifiedByName = "storagePathDto")
     @Mapping(target = "documentDocumentsDocumentTagses", source = "tags", qualifiedByName = "tagsDto")
     @Mapping(target = "archiveSerialNumber", source = "archiveSerialNumber", qualifiedByName = "archiveSerialNumberDto")
-    abstract public DocumentsDocument toEntity(Document dto);
+    abstract public Document toEntity(DocumentDTO dto);
 
     @Mapping(target = "correspondent", source = "correspondent", qualifiedByName = "correspondentEntity")
     @Mapping(target = "documentType", source = "documentType", qualifiedByName = "documentTypeEntity")
     @Mapping(target = "storagePath", source = "storagePath", qualifiedByName = "storagePathEntity")
     @Mapping(target = "tags", source = "documentDocumentsDocumentTagses", qualifiedByName = "tagsEntity")
     @Mapping(target = "createdDate", source = "created", qualifiedByName = "createdToCreatedDate")
-    abstract public Document toDto(DocumentsDocument entity);
+    abstract public DocumentDTO toDto(Document entity);
 
     @Named("correspondentEntity")
-    JsonNullable<Integer> map(DocumentsCorrespondent correspondent) {
+    JsonNullable<Integer> map(Correspondent correspondent) {
         return correspondent!=null ? JsonNullable.of(correspondent.getId()) : JsonNullable.undefined();
     }
 
     @Named("documentTypeEntity")
-    JsonNullable<Integer> map(DocumentsDocumenttype documentType) {
+    JsonNullable<Integer> map(DocumentType documentType) {
         return documentType!=null ? JsonNullable.of(documentType.getId()) : JsonNullable.undefined();
     }
 
@@ -69,7 +69,7 @@ public abstract class DocumentsDocumentMapper implements EntityMapper<Document, 
     }
 
     @Named("tagsEntity")
-    JsonNullable<List<Integer>> map(Set<DocumentsDocumentTags> tags) {
+    JsonNullable<List<Integer>> map(Set<DocumentTags> tags) {
         return tags!=null ? JsonNullable.of( tags.stream().map( tag->(int)tag.getId() ).toList() ) : JsonNullable.undefined();
     }
 
@@ -79,14 +79,14 @@ public abstract class DocumentsDocumentMapper implements EntityMapper<Document, 
     }
 
     @Named("correspondentDto")
-    DocumentsCorrespondent mapCorrespondent(JsonNullable<Integer> value) {
+    Correspondent mapCorrespondent(JsonNullable<Integer> value) {
         if(value==null || !value.isPresent() || value.get()==null) return null;
 
         return correspondentRepository.findById(value.get()).orElse(null);
     }
 
     @Named("documentTypeDto")
-    DocumentsDocumenttype mapDocumentType(JsonNullable<Integer> value) {
+    DocumentType mapDocumentType(JsonNullable<Integer> value) {
         if(value==null || !value.isPresent() || value.get()==null) return null;
 
         return documentTypeRepository.findById(value.get()).orElse(null);
@@ -107,10 +107,10 @@ public abstract class DocumentsDocumentMapper implements EntityMapper<Document, 
     }
 
     @Named("tagsDto")
-    Set<DocumentsDocumentTags> mapDocTag(JsonNullable<List<Integer>> value) {
+    Set<DocumentTags> mapDocTag(JsonNullable<List<Integer>> value) {
         if(value==null || !value.isPresent() || value.get()==null) return null;
 
-        return new HashSet<DocumentsDocumentTags>(documentTagsRepository.findAllById(value.get()));
+        return new HashSet<DocumentTags>(documentTagsRepository.findAllById(value.get()));
     }
 
     @Named("archiveSerialNumberDto")

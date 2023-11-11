@@ -1,7 +1,8 @@
 package com.paperless.api;
 
 
-import com.paperless.services.dto.Document;
+import com.paperless.services.dto.DocumentDTO;
+import com.paperless.services.dto.gets.GetDocuments200Response;
 import com.paperless.services.impl.DocumentServiceImpl;
 import org.openapitools.jackson.nullable.JsonNullable;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +45,7 @@ public class PaperlessApplication implements PaperlessApi {
 
       try{
           String name = document.get(0).getOriginalFilename();
-          Document documentDTO = new Document();
+          DocumentDTO documentDTO = new DocumentDTO();
 
 
           documentDTO.setTitle(JsonNullable.of(title == null ? name : title));
@@ -65,4 +66,8 @@ public class PaperlessApplication implements PaperlessApi {
       }
     }
 
+//    @Override
+//    public ResponseEntity<GetDocuments200Response> getDocuments(Integer page, Integer pageSize, String query, String ordering, List<Integer> tagsIdAll, Integer documentTypeId, Integer storagePathIdIn, Integer correspondentId, Boolean truncateContent) {
+//        documentService.getDocuments();
+//    }
 }

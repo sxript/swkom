@@ -41,7 +41,7 @@ public class DocumentsStoragepath {
     private AuthUser owner;
 
     @OneToMany(mappedBy = "storagePath")
-    private Set<DocumentsDocument> storagePathDocumentsDocuments;
+    private Set<Document> storagePathDocuments;
 
     public Integer getId() {
         return id;
@@ -99,13 +99,13 @@ public class DocumentsStoragepath {
         this.owner = owner;
     }
 
-    public Set<DocumentsDocument> getStoragePathDocumentsDocuments() {
-        return storagePathDocumentsDocuments;
+    public Set<Document> getStoragePathDocumentsDocuments() {
+        return storagePathDocuments;
     }
 
     public void setStoragePathDocumentsDocuments(
-            final Set<DocumentsDocument> storagePathDocumentsDocuments) {
-        this.storagePathDocumentsDocuments = storagePathDocumentsDocuments;
+            final Set<Document> storagePathDocuments) {
+        this.storagePathDocuments = storagePathDocuments;
     }
 
 }

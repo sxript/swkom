@@ -44,7 +44,7 @@ public class DocumentsTag {
     private AuthUser owner;
 
     @OneToMany(mappedBy = "tag")
-    private Set<DocumentsDocumentTags> tagDocumentsDocumentTagses;
+    private Set<DocumentTags> tagDocumentTags;
 
     @OneToMany(mappedBy = "tag")
     private Set<PaperlessMailMailruleAssignTags> tagPaperlessMailMailruleAssignTagses;
@@ -113,13 +113,13 @@ public class DocumentsTag {
         this.owner = owner;
     }
 
-    public Set<DocumentsDocumentTags> getTagDocumentsDocumentTagses() {
-        return tagDocumentsDocumentTagses;
+    public Set<DocumentTags> getTagDocumentsDocumentTagses() {
+        return tagDocumentTags;
     }
 
     public void setTagDocumentsDocumentTagses(
-            final Set<DocumentsDocumentTags> tagDocumentsDocumentTagses) {
-        this.tagDocumentsDocumentTagses = tagDocumentsDocumentTagses;
+            final Set<DocumentTags> tagDocumentTags) {
+        this.tagDocumentTags = tagDocumentTags;
     }
 
     public Set<PaperlessMailMailruleAssignTags> getTagPaperlessMailMailruleAssignTagses() {
