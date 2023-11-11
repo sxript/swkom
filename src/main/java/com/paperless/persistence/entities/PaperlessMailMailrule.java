@@ -72,11 +72,11 @@ public class PaperlessMailMailrule {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "assign_correspondent_id")
-    private DocumentsCorrespondent assignCorrespondent;
+    private Correspondent assignCorrespondent;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "assign_document_type_id")
-    private DocumentsDocumenttype assignDocumentType;
+    private DocumentType assignDocumentType;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "owner_id")
@@ -224,19 +224,19 @@ public class PaperlessMailMailrule {
         this.account = account;
     }
 
-    public DocumentsCorrespondent getAssignCorrespondent() {
+    public Correspondent getAssignCorrespondent() {
         return assignCorrespondent;
     }
 
-    public void setAssignCorrespondent(final DocumentsCorrespondent assignCorrespondent) {
+    public void setAssignCorrespondent(final Correspondent assignCorrespondent) {
         this.assignCorrespondent = assignCorrespondent;
     }
 
-    public DocumentsDocumenttype getAssignDocumentType() {
+    public DocumentType getAssignDocumentType() {
         return assignDocumentType;
     }
 
-    public void setAssignDocumentType(final DocumentsDocumenttype assignDocumentType) {
+    public void setAssignDocumentType(final DocumentType assignDocumentType) {
         this.assignDocumentType = assignDocumentType;
     }
 

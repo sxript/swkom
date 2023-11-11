@@ -1,11 +1,10 @@
 package com.paperless.services.impl;
 
-import com.paperless.persistence.entities.DocumentsDocument;
+import com.paperless.persistence.entities.Document;
 import com.paperless.persistence.repositories.DocumentsDocumentRepository;
-import com.paperless.services.dto.Document;
+import com.paperless.services.dto.DocumentDTO;
 import com.paperless.services.mapper.DocumentsDocumentMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -28,7 +27,7 @@ public class DocumentServiceImpl implements DocumentService {
 
 
     @Override
-    public void uploadDocument(Document documentDTO, List<MultipartFile> document) {
+    public void uploadDocument(DocumentDTO documentDTO, List<MultipartFile> document) {
 
         documentDTO.setCreated(OffsetDateTime.now());
         documentDTO.setAdded(OffsetDateTime.now());
@@ -39,7 +38,7 @@ public class DocumentServiceImpl implements DocumentService {
 
         System.out.println(documentDTO);
 
-        DocumentsDocument documentsEntity = documentMapper.toEntity(documentDTO);
+        Document documentsEntity = documentMapper.toEntity(documentDTO);
 
         System.out.println(documentsEntity);
 
@@ -51,6 +50,11 @@ public class DocumentServiceImpl implements DocumentService {
 
         documentRepository.save(documentsEntity);
 
+    }
+
+    @Override
+    public List<Document> getDocuments() {
+       return documentRepository.findAll();
     }
 
 
