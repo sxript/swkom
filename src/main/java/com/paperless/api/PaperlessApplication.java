@@ -20,10 +20,16 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.time.OffsetDateTime;
+import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
+
 import org.springframework.amqp.core.Queue;
+
 import javax.annotation.Generated;
 
 @Generated(value = "com.paperless.codegen.languages.SpringCodegen", date = "2023-10-10T06:36:40.060738Z[Etc/UTC]")
@@ -39,19 +45,14 @@ public class PaperlessApplication implements PaperlessApi {
     @Autowired
     DocumentServiceImpl documentService;
 
-    @Autowired
-    private RabbitTemplate rabbitTemplate;
 
-    @Autowired
-    private Queue ocrScanQueue;
 
     @Autowired
     public PaperlessApplication(NativeWebRequest request) {
         this.request = request;
     }
 
-    @Autowired
-    private ObjectMapper objectMapper;
+
 
     @Override
     public Optional<NativeWebRequest> getRequest() {
@@ -62,35 +63,37 @@ public class PaperlessApplication implements PaperlessApi {
     public ResponseEntity<Void> uploadDocument(String title, OffsetDateTime created, Integer documentType, List<Integer> tags, Integer correspondent, List<MultipartFile> document) {
 
 
-      try{
-          MultipartFile documentt = document.get(0);
-          String name = documentt.getOriginalFilename();
-          DocumentDTO documentDTO = new DocumentDTO();
+        try {
+            MultipartFile documentFile = document.get(0);
+            String name = documentFile.getOriginalFilename();
+            var filename = JsonNullable.of(documentFile.getOriginalFilename());
+            var createtionTime = OffsetDateTime.now();
 
 
-          documentDTO.setTitle(JsonNullable.of(title == null ? name : title));
-          documentDTO.setOriginalFileName(JsonNullable.of(name));
-          documentDTO.setCreated(created);
-          documentDTO.setDocumentType(JsonNullable.of(documentType));
-          documentDTO.setTags(JsonNullable.of(tags));
-          documentDTO.setCorrespondent(JsonNullable.of(correspondent));
-
-          log.info(document.get(0).getOriginalFilename());
-          documentService.uploadDocument(documentDTO,document);
+            var fileType = JsonNullable.of(filename.get().split("\\.")[1]);
+            byte[] documentContent = documentFile.getBytes();
+            var fileContentString = JsonNullable.of(Base64.getEncoder().encodeToString(documentContent));
 
 
-          // Convert DocumentDTO to JSON and send to RabbitMQ
-          String documentJson = objectMapper.writeValueAsString(documentDTO);
-          rabbitTemplate.convertAndSend(ocrScanQueue.getName(), documentJson);
-          log.info("Document uploaded and sent to RabbitMQ for OCR processing.");
+            DocumentDTO documentDTO = DocumentDTO.builder().title(filename).content(fileContentString).originalFileName(filename).created(createtionTime)
+                    .modified(createtionTime).added(createtionTime).build();
 
 
-          return new ResponseEntity<>(HttpStatus.OK);
 
-      }catch (Exception e){
-          log.error(e.getMessage());
-          return ResponseEntity.internalServerError().build();
-      }
+
+            documentService.uploadDocument(documentDTO);
+            return new ResponseEntity<>(HttpStatus.OK);
+
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
+    public static void saveByteArrayToFile(byte[] content, String filePath) throws IOException {
+        try (FileOutputStream fos = new FileOutputStream(filePath)) {
+            fos.write(content);
+        }
     }
 
 //    @Override
