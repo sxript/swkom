@@ -75,8 +75,7 @@ public class PaperlessApplication implements PaperlessApi {
           documentDTO.setTags(JsonNullable.of(tags));
           documentDTO.setCorrespondent(JsonNullable.of(correspondent));
 
-          System.out.println(document.get(0).getOriginalFilename());
-
+          log.info(document.get(0).getOriginalFilename());
           documentService.uploadDocument(documentDTO,document);
 
 

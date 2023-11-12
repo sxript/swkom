@@ -4,6 +4,7 @@ import com.paperless.persistence.entities.Document;
 import com.paperless.persistence.repositories.DocumentsDocumentRepository;
 import com.paperless.services.dto.DocumentDTO;
 import com.paperless.services.mapper.DocumentsDocumentMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -12,6 +13,7 @@ import java.time.OffsetDateTime;
 import java.util.List;
 
 @Service
+@Slf4j
 public class DocumentServiceImpl implements DocumentService {
 
 
@@ -36,11 +38,12 @@ public class DocumentServiceImpl implements DocumentService {
         documentDTO.setAdded(OffsetDateTime.now());
         documentDTO.setId(0);
 
-        System.out.println(documentDTO);
+
+        log.info(documentDTO.toString());
 
         Document documentsEntity = documentMapper.toEntity(documentDTO);
 
-        System.out.println(documentsEntity);
+        log.info(documentsEntity.toString());
 
 
         documentsEntity.setChecksum("checksum");
