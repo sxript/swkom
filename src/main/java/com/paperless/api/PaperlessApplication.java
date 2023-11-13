@@ -9,6 +9,10 @@ import com.rabbitmq.client.AMQP;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
+import io.minio.BucketExistsArgs;
+import io.minio.MakeBucketArgs;
+import io.minio.MinioClient;
+import io.minio.PutObjectArgs;
 import lombok.extern.slf4j.Slf4j;
 import org.openapitools.jackson.nullable.JsonNullable;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -22,6 +26,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.time.OffsetDateTime;
 import java.util.Base64;
@@ -46,13 +51,13 @@ public class PaperlessApplication implements PaperlessApi {
     DocumentServiceImpl documentService;
 
 
+    @Autowired
+    MinioClient minioClient;
 
     @Autowired
     public PaperlessApplication(NativeWebRequest request) {
         this.request = request;
     }
-
-
 
     @Override
     public Optional<NativeWebRequest> getRequest() {
@@ -79,6 +84,38 @@ public class PaperlessApplication implements PaperlessApi {
                     .modified(createtionTime).added(createtionTime).build();
 
 
+            try {
+                // Upload file to MinIO
+                InputStream inputStream = documentFile.getInputStream();
+
+                try {
+                    boolean found = minioClient.bucketExists(BucketExistsArgs.builder().bucket("bucketname").build());
+                    if (!found) {
+                        // if bucket does not exist, create it
+                        minioClient.makeBucket(MakeBucketArgs.builder().bucket("bucketname").build());
+                        log.info("Bucket created successfully");
+                    } else {
+                        log.info("Bucket " + "bucketname" + "already exists");
+                    }
+                } catch (Exception e) {
+                    log.error("Bucket does not exist and could not create bucket", e);
+                }
+
+
+
+                minioClient.putObject(
+                        PutObjectArgs.builder()
+                                .bucket("bucketname")
+                                .object("0")
+                                .stream(documentFile.getInputStream(), documentFile.getSize(), -1) // size is the size of the InputStream, -1 indicates unknown size
+                                .contentType(documentFile.getContentType())
+                                .build()
+                );
+                log.info("Document uploaded to MinIO.");
+            } catch (Exception e) {
+                log.error("Error uploading document to MinIO: {}", e.getMessage());
+                throw new RuntimeException("Error uploading document to MinIO", e);
+            }
 
 
             documentService.uploadDocument(documentDTO);
