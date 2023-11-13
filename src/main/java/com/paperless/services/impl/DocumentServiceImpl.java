@@ -6,12 +6,14 @@ import com.paperless.persistence.entities.Document;
 import com.paperless.persistence.repositories.DocumentsDocumentRepository;
 import com.paperless.services.dto.DocumentDTO;
 import com.paperless.services.mapper.DocumentsDocumentMapper;
+import io.minio.MinioClient;
+import io.minio.PutObjectArgs;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
+
 
 import java.time.OffsetDateTime;
 import java.util.List;
@@ -56,6 +58,7 @@ public class DocumentServiceImpl implements DocumentService {
         documentsEntity.setChecksum("checksum");
         documentsEntity.setStorageType(documentDTO.getOriginalFileName().get().split("\\.")[1]);
         documentsEntity.setMimeType(documentDTO.getOriginalFileName().get().split("\\.")[1]);
+
 
         // Convert DocumentDTO to JSON and send to RabbitMQ
         String documentJson = objectMapper.writeValueAsString(documentDTO);

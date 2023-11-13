@@ -47,6 +47,7 @@ services:
       MINIO_ROOT_PASSWORD: PASSWORD
     ports:
       - 9090:9090           # this lets us access the minio ui on localhost:9090
+      - 9000:9000           # this is the default port for minio
     command: server /data --console-address ":9090"
 volumes:
   miniostorage:
