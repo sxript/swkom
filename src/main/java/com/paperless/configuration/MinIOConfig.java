@@ -1,12 +1,14 @@
 package com.paperless.configuration;
 
 import io.minio.MinioClient;
+import lombok.Getter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class MinioConfig {
+@Getter
+public class MinIOConfig {
     @Value("${minio.endpoint}")
     private String endpoint;
 

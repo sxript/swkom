@@ -1,11 +1,16 @@
 package com.paperless.persistence.entities;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.util.Set;
 
 
 @Entity
-public class DocumentsStoragepath {
+@Getter
+@Setter
+public class StoragePath {
 
     @Id
     @Column(nullable = false, updatable = false)
@@ -43,61 +48,6 @@ public class DocumentsStoragepath {
     @OneToMany(mappedBy = "storagePath")
     private Set<Document> storagePathDocuments;
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(final Integer id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(final String name) {
-        this.name = name;
-    }
-
-    public String getMatch() {
-        return match;
-    }
-
-    public void setMatch(final String match) {
-        this.match = match;
-    }
-
-    public Integer getMatchingAlgorithm() {
-        return matchingAlgorithm;
-    }
-
-    public void setMatchingAlgorithm(final Integer matchingAlgorithm) {
-        this.matchingAlgorithm = matchingAlgorithm;
-    }
-
-    public Boolean getIsInsensitive() {
-        return isInsensitive;
-    }
-
-    public void setIsInsensitive(final Boolean isInsensitive) {
-        this.isInsensitive = isInsensitive;
-    }
-
-    public String getPath() {
-        return path;
-    }
-
-    public void setPath(final String path) {
-        this.path = path;
-    }
-
-    public AuthUser getOwner() {
-        return owner;
-    }
-
-    public void setOwner(final AuthUser owner) {
-        this.owner = owner;
-    }
 
     public Set<Document> getStoragePathDocumentsDocuments() {
         return storagePathDocuments;

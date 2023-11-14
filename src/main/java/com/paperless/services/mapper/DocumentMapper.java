@@ -1,10 +1,11 @@
 package com.paperless.services.mapper;
 
+import com.paperless.services.dto.DocumentDTO;
 import com.paperless.persistence.entities.*;
 import com.paperless.persistence.repositories.*;
-import com.paperless.services.dto.DocumentDTO;
 import org.mapstruct.*;
 import org.openapitools.jackson.nullable.JsonNullable;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +20,7 @@ import java.util.Set;
         unmappedTargetPolicy = ReportingPolicy.IGNORE,
         nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
 @Service
-public abstract class DocumentsDocumentMapper implements EntityMapper<DocumentDTO, Document> {
+public abstract class DocumentMapper implements EntityMapper<DocumentDTO, Document> {
 
     @Autowired
     private DocumentsCorrespondentRepository correspondentRepository;
