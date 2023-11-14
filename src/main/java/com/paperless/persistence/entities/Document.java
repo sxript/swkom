@@ -69,9 +69,9 @@ public class Document {
     @JoinColumn(name = "document_type_id")
     private DocumentType documentType;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY,cascade  = CascadeType.ALL)
     @JoinColumn(name = "storage_path_id")
-    private DocumentsStoragepath storagePath;
+    private StoragePath storagePath;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "owner_id")
@@ -211,11 +211,11 @@ public class Document {
         this.documentType = documentType;
     }
 
-    public DocumentsStoragepath getStoragePath() {
+    public StoragePath getStoragePath() {
         return storagePath;
     }
 
-    public void setStoragePath(final DocumentsStoragepath storagePath) {
+    public void setStoragePath(final StoragePath storagePath) {
         this.storagePath = storagePath;
     }
 

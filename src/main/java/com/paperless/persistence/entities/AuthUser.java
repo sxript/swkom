@@ -63,7 +63,7 @@ public class AuthUser {
     private Set<DocumentType> ownerDocumentTypes;
 
     @OneToMany(mappedBy = "owner")
-    private Set<DocumentsStoragepath> ownerDocumentsStoragepaths;
+    private Set<StoragePath> ownerStoragePaths;
 
     @OneToMany(mappedBy = "owner")
     private Set<DocumentsTag> ownerDocumentsTags;
@@ -209,13 +209,13 @@ public class AuthUser {
         this.ownerDocumentTypes = ownerDocumentTypes;
     }
 
-    public Set<DocumentsStoragepath> getOwnerDocumentsStoragepaths() {
-        return ownerDocumentsStoragepaths;
+    public Set<StoragePath> getOwnerDocumentsStoragepaths() {
+        return ownerStoragePaths;
     }
 
     public void setOwnerDocumentsStoragepaths(
-            final Set<DocumentsStoragepath> ownerDocumentsStoragepaths) {
-        this.ownerDocumentsStoragepaths = ownerDocumentsStoragepaths;
+            final Set<StoragePath> ownerStoragePaths) {
+        this.ownerStoragePaths = ownerStoragePaths;
     }
 
     public Set<DocumentsTag> getOwnerDocumentsTags() {

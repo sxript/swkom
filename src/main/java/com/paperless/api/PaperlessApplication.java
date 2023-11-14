@@ -50,10 +50,6 @@ public class PaperlessApplication implements PaperlessApi {
     @Autowired
     DocumentServiceImpl documentService;
 
-
-    @Autowired
-    MinioClient minioClient;
-
     @Autowired
     public PaperlessApplication(NativeWebRequest request) {
         this.request = request;
@@ -74,51 +70,15 @@ public class PaperlessApplication implements PaperlessApi {
             var filename = JsonNullable.of(documentFile.getOriginalFilename());
             var createtionTime = OffsetDateTime.now();
 
-
             var fileType = JsonNullable.of(filename.get().split("\\.")[1]);
             byte[] documentContent = documentFile.getBytes();
             var fileContentString = JsonNullable.of(Base64.getEncoder().encodeToString(documentContent));
 
-
             DocumentDTO documentDTO = DocumentDTO.builder().title(filename).content(fileContentString).originalFileName(filename).created(createtionTime)
-                    .modified(createtionTime).added(createtionTime).build();
+                    .modified(createtionTime).added(createtionTime).created(OffsetDateTime.now())
+                            .added(OffsetDateTime.now()).modified(OffsetDateTime.now()).build();
 
-
-            try {
-                // Upload file to MinIO
-                InputStream inputStream = documentFile.getInputStream();
-
-                try {
-                    boolean found = minioClient.bucketExists(BucketExistsArgs.builder().bucket("bucketname").build());
-                    if (!found) {
-                        // if bucket does not exist, create it
-                        minioClient.makeBucket(MakeBucketArgs.builder().bucket("bucketname").build());
-                        log.info("Bucket created successfully");
-                    } else {
-                        log.info("Bucket " + "bucketname" + "already exists");
-                    }
-                } catch (Exception e) {
-                    log.error("Bucket does not exist and could not create bucket", e);
-                }
-
-
-
-                minioClient.putObject(
-                        PutObjectArgs.builder()
-                                .bucket("bucketname")
-                                .object("0")
-                                .stream(documentFile.getInputStream(), documentFile.getSize(), -1) // size is the size of the InputStream, -1 indicates unknown size
-                                .contentType(documentFile.getContentType())
-                                .build()
-                );
-                log.info("Document uploaded to MinIO.");
-            } catch (Exception e) {
-                log.error("Error uploading document to MinIO: {}", e.getMessage());
-                throw new RuntimeException("Error uploading document to MinIO", e);
-            }
-
-
-            documentService.uploadDocument(documentDTO);
+            documentService.uploadDocument(documentDTO, documentFile);
             return new ResponseEntity<>(HttpStatus.OK);
 
         } catch (Exception e) {
@@ -132,6 +92,7 @@ public class PaperlessApplication implements PaperlessApi {
             fos.write(content);
         }
     }
+
 
 //    @Override
 //    public ResponseEntity<GetDocuments200Response> getDocuments(Integer page, Integer pageSize, String query, String ordering, List<Integer> tagsIdAll, Integer documentTypeId, Integer storagePathIdIn, Integer correspondentId, Boolean truncateContent) {
