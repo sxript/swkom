@@ -51,13 +51,15 @@ public class DocumentServiceImpl implements DocumentService {
 
         String message = minIOService.getBucketName()+"/"+path;
 
-        StoragePath storagePath = new StoragePath();
 
-        storagePath.setPath(message);
-        storagePath.setName(documentDTO.getOriginalFileName().get());
-        storagePath.setIsInsensitive(false);
-        storagePath.setMatch("");
-        storagePath.setMatchingAlgorithm(0);
+
+        StoragePath storagePath = StoragePath.builder().path(message)
+        .name(documentDTO.getOriginalFileName().get())
+        .isInsensitive(false)
+        .match("")
+        .matchingAlgorithm(0)
+        .build();
+
 
 //        documentsEntity.setStoragePath(storagePath);
 
