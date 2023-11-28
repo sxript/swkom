@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository;
 
 @Component
 @Repository
-public interface DocumentsStoragepathRepository extends JpaRepository<StoragePath, Integer> {
+public interface StoragePathRepository extends JpaRepository<StoragePath, Integer> {
 }
