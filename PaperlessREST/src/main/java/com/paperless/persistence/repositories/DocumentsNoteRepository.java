@@ -4,5 +4,5 @@ import com.paperless.persistence.entities.DocumentsNote;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 
-public interface NoteRepository extends JpaRepository<DocumentsNote, Integer> {
+public interface DocumentsNoteRepository extends JpaRepository<DocumentsNote, Integer> {
 }
