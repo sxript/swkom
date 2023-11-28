@@ -27,7 +27,7 @@ public abstract class DocumentMapper implements EntityMapper<DocumentDTO, Docume
     @Autowired
     private DocumentsDocumenttypeRepository documentTypeRepository;
     @Autowired
-    private DocumentsStoragepathRepository storagePathRepository;
+    private StoragePathRepository storagePathRepository;
     @Autowired
     private AuthUserRepository userRepository;
     @Autowired
