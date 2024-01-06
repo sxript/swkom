@@ -20,4 +20,4 @@ RUN mvn package -DskipTests
 
 RUN ls -la target
 
-CMD ["java","-jar","target/paperlessOcr-1.0-SNAPSHOT.jar"]
+CMD ["java","-jar","target/paperlessOcr-0.0.1-SNAPSHOT.jar"]
