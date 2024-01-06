@@ -1,4 +1,4 @@
-version: "1.0"
+version: "3.0"
 services:
   frontend:
     image: paperless:nginx
@@ -63,4 +63,4 @@ volumes:
   miniostorage:
 networks:
   bridge-network:
-    driver: bridge
+    name: bridge_network
