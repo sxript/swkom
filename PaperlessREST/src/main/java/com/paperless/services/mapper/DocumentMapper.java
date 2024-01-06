@@ -34,7 +34,7 @@ public abstract class DocumentMapper implements EntityMapper<DocumentDTO, Docume
     private DocumentsDocumentTagsRepository documentTagsRepository;
 
 
-  @Mapping(target = "correspondent", source = "correspondent", qualifiedByName = "correspondentDto")
+    @Mapping(target = "corresponddashboardent", source = "correspondent", qualifiedByName = "correspondentDto")
     @Mapping(target = "documentType", source = "documentType", qualifiedByName = "documentTypeDto")
     @Mapping(target = "storagePath", source = "storagePath", qualifiedByName = "storagePathDto")
     @Mapping(target = "documentDocumentsDocumentTagses", source = "tags", qualifiedByName = "tagsDto")

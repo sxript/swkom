@@ -61,11 +61,11 @@ public class DocumentServiceImpl implements DocumentService {
         .build();
 
 
-//        documentsEntity.setStoragePath(storagePath);
+       documentsEntity.setStoragePath(storagePath);
 
-//ToDo: add storagePath to document
-//ToDo: updateDocumentMapper and getDocumentMapper
-//ToDo: getDocument and updateDocument Routen
+        //ToDo: add storagePath to document
+        //ToDo: updateDocumentMapper and getDocumentMapper
+        //ToDo: getDocument and updateDocument Routen
 
 
         //ToDo: maybe extract the minIOService and rabbitMQService to the Controller
