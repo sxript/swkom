@@ -21,7 +21,7 @@ public class MinIOService {
     @Getter
     private String bucketName;
 
-    private MinioClient minioClient;
+    private final MinioClient minioClient;
     @Autowired
     public MinIOService(MinioClient minioClient) {
         this.minioClient = minioClient;
