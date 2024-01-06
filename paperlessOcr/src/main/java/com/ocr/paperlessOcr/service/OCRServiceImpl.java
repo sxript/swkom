@@ -47,19 +47,15 @@ public class OCRServiceImpl implements OCRService {
             System.out.println(image);
             System.out.println("----------------");
 
-//            ITesseract tesseract = new Tesseract();
-//
-//
-//            String result = tesseract.doOCR(image);
-//            System.out.println(result);
+            ITesseract tesseract = new Tesseract();
+            String result = tesseract.doOCR(image);
+            System.out.println(result);
 
 
         } catch (Exception ex) {
             System.out.println(ex);
 
         }
-
-
     }
 
 
@@ -68,8 +64,6 @@ public class OCRServiceImpl implements OCRService {
 
         String[] bucketAndFileName = extractBucketAndFileName(pdfFilePath);
         if (bucketAndFileName == null) return null;
-
-//        log.info(bucketAndFileName[0] +", "+ bucketAndFileName[1]);
 
         String bucketName = bucketAndFileName[0];
         String fileName = bucketAndFileName[1];
@@ -82,7 +76,6 @@ public class OCRServiceImpl implements OCRService {
 
             return stream.readAllBytes();
         } catch (MinioException | IOException | InvalidKeyException | NoSuchAlgorithmException e) {
-//            log.error(e.getMessage(), e);
         }
 
         return null;

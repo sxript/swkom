@@ -50,7 +50,6 @@ services:
       - 9000:9000           # this is the default port for minio
     command: server /data --console-address ":9090"
   ocr:
-    image: paperless:nginx
     build:
       dockerfile: paperlessOcr/Dockerfile
     ports:
@@ -58,5 +57,6 @@ services:
     depends_on:
       - 'rabbitmq'
       - 'minio'
+      - 'backend'
 volumes:
   miniostorage:
