@@ -6,6 +6,8 @@ services:
       dockerfile: ui/Dockerfile
     ports:
       - "8080:80"
+    networks:
+        - bridge-network
   backend:
     image: paperless:openjdk
     build:
@@ -19,6 +21,8 @@ services:
       spring.datasource.password: "secret"
     ports:
       - "8088:8088"
+    networks:
+        - bridge-network
   postgres:
     image: 'postgres:latest'
     environment:
@@ -27,6 +31,8 @@ services:
       - 'POSTGRES_USER=myuser'
     ports:
       - '5432:5432'
+    networks:
+        - bridge-network
   rabbitmq:
     image: 'rabbitmq:management'
     environment:
@@ -37,6 +43,8 @@ services:
       - '15672:15672'
     depends_on:
       - 'postgres'
+    networks:
+        - bridge-network
   minio:
     image: quay.io/minio/minio
     volumes:
@@ -49,6 +57,10 @@ services:
       - 9090:9090           # this lets us access the minio ui on localhost:9090
       - 9000:9000           # this is the default port for minio
     command: server /data --console-address ":9090"
+    networks:
+        - bridge-network
 volumes:
   miniostorage:
-
+networks:
+  bridge-network:
+    driver: bridge
