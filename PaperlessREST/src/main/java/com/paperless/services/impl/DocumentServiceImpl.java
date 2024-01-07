@@ -71,9 +71,14 @@ public class DocumentServiceImpl implements DocumentService {
         //ToDo: maybe extract the minIOService and rabbitMQService to the Controller
         minIOService.uploadDocument(file, path);
 
-        rabbitMQService.saveInQueue(message);
 
         documentRepository.save(documentsEntity);
+
+        log.info(storagePath.getId().toString());
+        rabbitMQService.saveInQueue(documentsEntity.getId().toString());
+
+
+
 
     }
 

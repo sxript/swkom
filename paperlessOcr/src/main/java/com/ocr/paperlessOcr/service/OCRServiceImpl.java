@@ -1,5 +1,9 @@
 package com.ocr.paperlessOcr.service;
 
+import com.ocr.paperlessOcr.persistence.entities.Document;
+import com.ocr.paperlessOcr.persistence.entities.StoragePath;
+import com.ocr.paperlessOcr.persistence.repositories.DocumentsDocumentRepository;
+import com.ocr.paperlessOcr.persistence.repositories.DocumentsStoragepathRepository;
 import io.minio.GetObjectArgs;
 import io.minio.MinioClient;
 import io.minio.errors.MinioException;
@@ -24,22 +28,26 @@ import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class OCRServiceImpl implements OCRService {
     private final MinioClient minioClient;
 
+    private final DocumentsDocumentRepository documentsDocumentRepository;
+
     @Autowired
-    public OCRServiceImpl(MinioClient minioClient) {
+    public OCRServiceImpl(MinioClient minioClient,DocumentsDocumentRepository documentsDocumentRepository) {
         this.minioClient = minioClient;
+        this.documentsDocumentRepository = documentsDocumentRepository;
     }
 
     @Override
-    public void performOCR(String pdfFileName) {
+    public void performOCR(String id) {
 
         System.out.println("in performing");
 
-        var data = getPdfData(pdfFileName);
+        var data = getPdfData(id);
 
 
         try {
@@ -51,6 +59,13 @@ public class OCRServiceImpl implements OCRService {
             String result = tesseract.doOCR(image);
             System.out.println(result);
 
+            Optional<Document> document = documentsDocumentRepository.findById(Integer.parseInt(id));
+
+            document.get().setContent(result);
+
+            //ToDo: check the Optional
+            documentsDocumentRepository.save(document.get());
+
 
         } catch (Exception ex) {
             System.out.println(ex);
@@ -59,20 +74,24 @@ public class OCRServiceImpl implements OCRService {
     }
 
 
-    private byte[] getPdfData(String pdfFilePath) {
+    private byte[] getPdfData(String storageId) {
 
 
-        String[] bucketAndFileName = extractBucketAndFileName(pdfFilePath);
+
+        Optional<Document> document = documentsDocumentRepository.findById(Integer.parseInt(storageId));
+
+        System.out.println(document.get().getStoragePath().getPath() + "  Id: ");
+
+
+        String[] bucketAndFileName = extractBucketAndFileName(document.get().getStoragePath().getPath());
+
+        System.out.println("line 79");
         if (bucketAndFileName == null) return null;
 
         String bucketName = bucketAndFileName[0];
         String fileName = bucketAndFileName[1];
 
-        try (InputStream stream = minioClient.getObject(
-                GetObjectArgs.builder()
-                        .bucket(bucketName)
-                        .object(fileName)
-                        .build())) {
+        try (InputStream stream = minioClient.getObject(GetObjectArgs.builder().bucket(bucketName).object(fileName).build())) {
 
             return stream.readAllBytes();
         } catch (MinioException | IOException | InvalidKeyException | NoSuchAlgorithmException e) {
@@ -93,7 +112,6 @@ public class OCRServiceImpl implements OCRService {
     }
 
 
-
     private String extractTextFromPdf(String filePath) throws IOException {
         PDDocument document = Loader.loadPDF(new File(filePath));
         PDFTextStripper pdfTextStripper = new PDFTextStripper();
@@ -101,6 +119,7 @@ public class OCRServiceImpl implements OCRService {
         document.close();
         return pdfText;
     }
+
     public BufferedImage convertPdfToImages(byte[] pdfData) throws IOException {
         BufferedImage images = null;
 

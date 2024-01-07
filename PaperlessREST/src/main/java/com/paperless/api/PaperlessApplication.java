@@ -74,7 +74,7 @@ public class PaperlessApplication implements PaperlessApi {
             byte[] documentContent = documentFile.getBytes();
             var fileContentString = JsonNullable.of(Base64.getEncoder().encodeToString(documentContent));
 
-            DocumentDTO documentDTO = DocumentDTO.builder().title(filename).content(fileContentString).originalFileName(filename).created(createtionTime)
+            DocumentDTO documentDTO = DocumentDTO.builder().title(filename).content(JsonNullable.of("")).originalFileName(filename).created(createtionTime)
                     .modified(createtionTime).added(createtionTime).created(OffsetDateTime.now())
                             .added(OffsetDateTime.now()).modified(OffsetDateTime.now()).build();
 

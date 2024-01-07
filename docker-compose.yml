@@ -57,6 +57,5 @@ services:
     depends_on:
       - 'rabbitmq'
       - 'minio'
-      - 'backend'
 volumes:
   miniostorage:
