@@ -1,4 +1,4 @@
-package com.paperless.services.dto;
+package com.ocr.paperlessOcr.service.dto;
 
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -7,13 +7,14 @@ import java.time.OffsetDateTime;
 import java.util.Arrays;
 import org.openapitools.jackson.nullable.JsonNullable;
 import org.springframework.format.annotation.DateTimeFormat;
+import jakarta.validation.Valid;
+import jakarta.annotation.Generated;
 
-import javax.validation.Valid;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 
 
-import javax.annotation.Generated;
+;
 
 /**
  * Correspondent

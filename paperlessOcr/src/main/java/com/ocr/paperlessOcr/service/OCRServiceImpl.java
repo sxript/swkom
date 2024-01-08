@@ -33,13 +33,14 @@ import java.util.Optional;
 @Service
 public class OCRServiceImpl implements OCRService {
     private final MinioClient minioClient;
-
+    private final SearchIndexService searchIndexService;
     private final DocumentsDocumentRepository documentsDocumentRepository;
 
     @Autowired
-    public OCRServiceImpl(MinioClient minioClient,DocumentsDocumentRepository documentsDocumentRepository) {
+    public OCRServiceImpl(MinioClient minioClient, DocumentsDocumentRepository documentsDocumentRepository, SearchIndexService searchIndexService) {
         this.minioClient = minioClient;
         this.documentsDocumentRepository = documentsDocumentRepository;
+        this.searchIndexService = searchIndexService;
     }
 
     @Override
@@ -65,6 +66,14 @@ public class OCRServiceImpl implements OCRService {
 
             //ToDo: check the Optional
             documentsDocumentRepository.save(document.get());
+            // do ElasticSearch indexing
+            try {
+                System.out.println("line 71");
+                searchIndexService.indexDocument(document.get());
+                System.out.println("line 73");
+            } catch (IOException e) {
+                System.out.println("Error: " + e.getMessage());
+            }
 
 
         } catch (Exception ex) {
@@ -75,7 +84,6 @@ public class OCRServiceImpl implements OCRService {
 
 
     private byte[] getPdfData(String storageId) {
-
 
 
         Optional<Document> document = documentsDocumentRepository.findById(Integer.parseInt(storageId));

@@ -9,15 +9,11 @@ import com.paperless.configuration.ElasticSearchConfig;
 import com.paperless.persistence.entities.Document;
 import com.paperless.persistence.repositories.DocumentsDocumentRepository;
 import com.paperless.services.SearchIndexService;
-import com.paperless.services.dto.DocumentDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Component
 public class ElasticSearchImpl implements SearchIndexService {
@@ -40,7 +36,8 @@ public class ElasticSearchImpl implements SearchIndexService {
         SearchResponse<ObjectNode> response = esClient.search(s -> s
                         .index(ElasticSearchConfig.DOCUMENTS_INDEX_NAME)
                         .size(1000)
-                        .query(q -> q.match(m -> m.field("content").query(query))),
+                        .query(q ->q.multiMatch(m -> m
+                                .fields("content", "title").query(query))),
                 ObjectNode.class
         );
 

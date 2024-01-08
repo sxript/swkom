@@ -1,14 +1,15 @@
-package com.paperless.services.dto;
+package com.ocr.paperlessOcr.service.dto;
 
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Arrays;
+
+import jakarta.annotation.Generated;
 import org.openapitools.jackson.nullable.JsonNullable;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 
-import javax.annotation.Generated;
 
 /**
  * DocTag

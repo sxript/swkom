@@ -10,7 +10,7 @@ import lombok.Setter;
 
 
 @Entity
-
+@Getter
 public class Document {
 
     @Id
@@ -88,153 +88,115 @@ public class Document {
     @OneToMany(mappedBy = "document")
     private Set<DocumentTags> documentDocumentTags;
 
-    public Integer getId() {
-        return id;
-    }
+
 
     public void setId(final Integer id) {
         this.id = id;
     }
 
-    public String getTitle() {
-        return title;
-    }
+
 
     public void setTitle(final String title) {
         this.title = title;
     }
 
-    public String getContent() {
-        return content;
-    }
+
 
     public void setContent(final String content) {
         this.content = content;
     }
 
-    public OffsetDateTime getCreated() {
-        return created;
-    }
+
 
     public void setCreated(final OffsetDateTime created) {
         this.created = created;
     }
 
-    public OffsetDateTime getModified() {
-        return modified;
-    }
+
 
     public void setModified(final OffsetDateTime modified) {
         this.modified = modified;
     }
 
-    public String getChecksum() {
-        return checksum;
-    }
+
 
     public void setChecksum(final String checksum) {
         this.checksum = checksum;
     }
 
-    public OffsetDateTime getAdded() {
-        return added;
-    }
+
 
     public void setAdded(final OffsetDateTime added) {
         this.added = added;
     }
 
-    public String getStorageType() {
-        return storageType;
-    }
+
 
     public void setStorageType(final String storageType) {
         this.storageType = storageType;
     }
 
-    public String getFilename() {
-        return filename;
-    }
+
 
     public void setFilename(final String filename) {
         this.filename = filename;
     }
 
-    public Integer getArchiveSerialNumber() {
-        return archiveSerialNumber;
-    }
+
 
     public void setArchiveSerialNumber(final Integer archiveSerialNumber) {
         this.archiveSerialNumber = archiveSerialNumber;
     }
 
-    public String getMimeType() {
-        return mimeType;
-    }
+
 
     public void setMimeType(final String mimeType) {
         this.mimeType = mimeType;
     }
 
-    public String getArchiveChecksum() {
-        return archiveChecksum;
-    }
+
 
     public void setArchiveChecksum(final String archiveChecksum) {
         this.archiveChecksum = archiveChecksum;
     }
 
-    public String getArchiveFilename() {
-        return archiveFilename;
-    }
+
 
     public void setArchiveFilename(final String archiveFilename) {
         this.archiveFilename = archiveFilename;
     }
 
-    public String getOriginalFilename() {
-        return originalFilename;
-    }
+
 
     public void setOriginalFilename(final String originalFilename) {
         this.originalFilename = originalFilename;
     }
 
-    public Correspondent getCorrespondent() {
-        return correspondent;
-    }
+
 
     public void setCorrespondent(final Correspondent correspondent) {
         this.correspondent = correspondent;
     }
 
-    public DocumentType getDocumentType() {
-        return documentType;
-    }
+
 
     public void setDocumentType(final DocumentType documentType) {
         this.documentType = documentType;
     }
 
-    public StoragePath getStoragePath() {
-        return storagePath;
-    }
+
 
     public void setStoragePath(final StoragePath storagePath) {
         this.storagePath = storagePath;
     }
 
-    public AuthUser getOwner() {
-        return owner;
-    }
+
 
     public void setOwner(final AuthUser owner) {
         this.owner = owner;
     }
 
-    public Set<DocumentsNote> getDocumentDocumentsNotes() {
-        return documentDocumentsNotes;
-    }
+
 
     public void setDocumentDocumentsNotes(final Set<DocumentsNote> documentDocumentsNotes) {
         this.documentDocumentsNotes = documentDocumentsNotes;
