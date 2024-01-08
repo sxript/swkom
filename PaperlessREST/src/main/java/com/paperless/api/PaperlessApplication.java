@@ -3,6 +3,7 @@ package com.paperless.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.paperless.services.dto.DocumentDTO;
+import com.paperless.services.dto.gets.GetDocument200Response;
 import com.paperless.services.dto.gets.GetDocuments200Response;
 import com.paperless.services.impl.DocumentServiceImpl;
 import com.rabbitmq.client.AMQP;
@@ -93,9 +94,16 @@ public class PaperlessApplication implements PaperlessApi {
         }
     }
 
+    @Override
+    public ResponseEntity<GetDocuments200Response> getDocuments(Integer page, Integer pageSize, String query, String ordering, List<Integer> tagsIdAll, Integer documentTypeId, Integer storagePathIdIn, Integer correspondentId, Boolean truncateContent) {
 
-//    @Override
-//    public ResponseEntity<GetDocuments200Response> getDocuments(Integer page, Integer pageSize, String query, String ordering, List<Integer> tagsIdAll, Integer documentTypeId, Integer storagePathIdIn, Integer correspondentId, Boolean truncateContent) {
-//        documentService.getDocuments();
-//    }
+        System.out.println("i am in ");
+        try {
+            return documentService.getDocuments(page, pageSize, query, ordering, tagsIdAll, documentTypeId, storagePathIdIn, correspondentId, truncateContent);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
 }
