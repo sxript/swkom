@@ -1,9 +1,6 @@
 package com.paperless.services;
 
-import io.minio.BucketExistsArgs;
-import io.minio.MakeBucketArgs;
-import io.minio.MinioClient;
-import io.minio.PutObjectArgs;
+import io.minio.*;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,6 +62,21 @@ public class MinIOService {
             throw new RuntimeException("Error uploading document to MinIO", e);
         }
 
+    }
+
+    public InputStream getObjectById(String id) throws RuntimeException {
+        try {
+            InputStream stream = minioClient.getObject(
+                    GetObjectArgs.builder()
+                            .bucket(bucketName)
+                            .object(id)
+                            .build()
+            );
+            System.out.println("Document downloaded from MinIO.");
+            return stream;
+        } catch (Exception e) {
+            throw new RuntimeException("Error downloading document from MinIO", e);
+        }
     }
 
 }

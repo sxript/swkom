@@ -1,6 +1,7 @@
 package com.paperless.services.impl;
 
 import co.elastic.clients.elasticsearch.ElasticsearchClient;
+import co.elastic.clients.elasticsearch.core.GetResponse;
 import co.elastic.clients.elasticsearch.core.SearchResponse;
 import co.elastic.clients.elasticsearch.core.search.Hit;
 import co.elastic.clients.elasticsearch.core.search.HitsMetadata;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Component
 @Slf4j
@@ -49,6 +51,21 @@ public class ElasticSearchImpl implements SearchIndexService {
 
         return extractDocuments(response.hits());
 
+    }
+
+    @Override
+    public Optional<Document> getDocumentById(int id) {
+        try {
+            GetResponse<Document> response = esClient.get(g -> g
+                            .index(ElasticSearchConfig.DOCUMENTS_INDEX_NAME)
+                            .id(String.valueOf(id)),
+                    Document.class
+            );
+            return (response.found() && response.source()!=null) ? Optional.of(response.source()) : Optional.empty();
+        } catch (IOException e) {
+            log.error("Failed to get document id=" + id + " from elasticsearch: " + e);
+            return Optional.empty();
+        }
     }
 
     private List<Document> extractDocuments(HitsMetadata<ObjectNode> hitsMetadata) {

@@ -10,4 +10,5 @@ import java.util.Optional;
 public interface SearchIndexService {
     List<Document> searchDocument(String query) throws IOException;
 
+    Optional<Document> getDocumentById(int id);
 }
