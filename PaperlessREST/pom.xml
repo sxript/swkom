@@ -159,5 +159,13 @@
             <artifactId>elasticsearch-java</artifactId>
             <version>8.9.0</version>
         </dependency>
+
+
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+        </dependency>
+
+
     </dependencies>
 </project>
