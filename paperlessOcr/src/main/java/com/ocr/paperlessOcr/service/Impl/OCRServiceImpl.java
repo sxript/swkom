@@ -47,7 +47,6 @@ public class OCRServiceImpl implements OCRService {
 
         var data = getPdfData(id);
 
-
         try {
             var image = convertPdfToImages(data);
             ITesseract tesseract = new Tesseract();
@@ -75,7 +74,7 @@ public class OCRServiceImpl implements OCRService {
     }
 
 
-    private byte[] getPdfData(String storageId) {
+    public byte[] getPdfData(String storageId) {
 
 
         Optional<Document> document = documentService.getById(storageId);

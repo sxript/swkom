@@ -141,7 +141,14 @@
 			<artifactId>elasticsearch-java</artifactId>
 			<version>8.9.0</version>
 		</dependency>
-	</dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+
+    </dependencies>
 
 	<build>
 		<plugins>
