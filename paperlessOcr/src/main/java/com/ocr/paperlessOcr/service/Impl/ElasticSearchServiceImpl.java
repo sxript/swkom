@@ -48,11 +48,6 @@ public class ElasticSearchServiceImpl implements SearchIndexService {
                 .document(documentdto)
         );
 
-        String logMsg = "Indexed document " + documentdto.getId() + ": result=" + response.result() + ", index=" + response.index();
-        if (response.result() != Result.Created && response.result() != Result.Updated)
-            System.out.println("Failed to " + logMsg);
-        else
-            System.out.println("Successfully " + logMsg);
         return response.result();
 
     }

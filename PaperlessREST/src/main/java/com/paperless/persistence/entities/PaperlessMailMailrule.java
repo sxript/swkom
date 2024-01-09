@@ -1,9 +1,14 @@
 package com.paperless.persistence.entities;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.util.Set;
 
 
+@Setter
+@Getter
 @Entity
 public class PaperlessMailMailrule {
 
@@ -87,183 +92,5 @@ public class PaperlessMailMailrule {
 
     @OneToMany(mappedBy = "mailrule")
     private Set<PaperlessMailMailruleAssignTags> mailrulePaperlessMailMailruleAssignTagses;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(final Integer id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(final String name) {
-        this.name = name;
-    }
-
-    public String getFolder() {
-        return folder;
-    }
-
-    public void setFolder(final String folder) {
-        this.folder = folder;
-    }
-
-    public String getFilterFrom() {
-        return filterFrom;
-    }
-
-    public void setFilterFrom(final String filterFrom) {
-        this.filterFrom = filterFrom;
-    }
-
-    public String getFilterSubject() {
-        return filterSubject;
-    }
-
-    public void setFilterSubject(final String filterSubject) {
-        this.filterSubject = filterSubject;
-    }
-
-    public String getFilterBody() {
-        return filterBody;
-    }
-
-    public void setFilterBody(final String filterBody) {
-        this.filterBody = filterBody;
-    }
-
-    public Integer getMaximumAge() {
-        return maximumAge;
-    }
-
-    public void setMaximumAge(final Integer maximumAge) {
-        this.maximumAge = maximumAge;
-    }
-
-    public Integer getAction() {
-        return action;
-    }
-
-    public void setAction(final Integer action) {
-        this.action = action;
-    }
-
-    public String getActionParameter() {
-        return actionParameter;
-    }
-
-    public void setActionParameter(final String actionParameter) {
-        this.actionParameter = actionParameter;
-    }
-
-    public Integer getAssignTitleFrom() {
-        return assignTitleFrom;
-    }
-
-    public void setAssignTitleFrom(final Integer assignTitleFrom) {
-        this.assignTitleFrom = assignTitleFrom;
-    }
-
-    public Integer getAssignCorrespondentFrom() {
-        return assignCorrespondentFrom;
-    }
-
-    public void setAssignCorrespondentFrom(final Integer assignCorrespondentFrom) {
-        this.assignCorrespondentFrom = assignCorrespondentFrom;
-    }
-
-    public Integer getOrder() {
-        return order;
-    }
-
-    public void setOrder(final Integer order) {
-        this.order = order;
-    }
-
-    public Integer getAttachmentType() {
-        return attachmentType;
-    }
-
-    public void setAttachmentType(final Integer attachmentType) {
-        this.attachmentType = attachmentType;
-    }
-
-    public String getFilterAttachmentFilename() {
-        return filterAttachmentFilename;
-    }
-
-    public void setFilterAttachmentFilename(final String filterAttachmentFilename) {
-        this.filterAttachmentFilename = filterAttachmentFilename;
-    }
-
-    public Integer getConsumptionScope() {
-        return consumptionScope;
-    }
-
-    public void setConsumptionScope(final Integer consumptionScope) {
-        this.consumptionScope = consumptionScope;
-    }
-
-    public String getFilterTo() {
-        return filterTo;
-    }
-
-    public void setFilterTo(final String filterTo) {
-        this.filterTo = filterTo;
-    }
-
-    public PaperlessMailMailaccount getAccount() {
-        return account;
-    }
-
-    public void setAccount(final PaperlessMailMailaccount account) {
-        this.account = account;
-    }
-
-    public Correspondent getAssignCorrespondent() {
-        return assignCorrespondent;
-    }
-
-    public void setAssignCorrespondent(final Correspondent assignCorrespondent) {
-        this.assignCorrespondent = assignCorrespondent;
-    }
-
-    public DocumentType getAssignDocumentType() {
-        return assignDocumentType;
-    }
-
-    public void setAssignDocumentType(final DocumentType assignDocumentType) {
-        this.assignDocumentType = assignDocumentType;
-    }
-
-    public AuthUser getOwner() {
-        return owner;
-    }
-
-    public void setOwner(final AuthUser owner) {
-        this.owner = owner;
-    }
-
-    public Set<PaperlessMailProcessedmail> getRulePaperlessMailProcessedmails() {
-        return rulePaperlessMailProcessedmails;
-    }
-
-    public void setRulePaperlessMailProcessedmails(
-            final Set<PaperlessMailProcessedmail> rulePaperlessMailProcessedmails) {
-        this.rulePaperlessMailProcessedmails = rulePaperlessMailProcessedmails;
-    }
-
-    public Set<PaperlessMailMailruleAssignTags> getMailrulePaperlessMailMailruleAssignTagses() {
-        return mailrulePaperlessMailMailruleAssignTagses;
-    }
-
-    public void setMailrulePaperlessMailMailruleAssignTagses(
-            final Set<PaperlessMailMailruleAssignTags> mailrulePaperlessMailMailruleAssignTagses) {
-        this.mailrulePaperlessMailMailruleAssignTagses = mailrulePaperlessMailMailruleAssignTagses;
-    }
 
 }

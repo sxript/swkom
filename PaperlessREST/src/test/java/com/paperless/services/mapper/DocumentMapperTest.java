@@ -39,7 +39,7 @@ class DocumentMapperTest {
     private DocumentsDocumentTagsRepository documentTagsRepository;
 
     @InjectMocks
-    private DocumentMapper documentMapper = Mappers.getMapper(DocumentMapper.class);
+    private final DocumentMapper documentMapper = Mappers.getMapper(DocumentMapper.class);
 
     @Test
     void testToEntity() {

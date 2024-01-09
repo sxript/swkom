@@ -78,7 +78,6 @@ class ElasticSearchTest {
             // Extract the substring containing the number
             String id = responseBody.substring(startIndex, endIndex);
 
-            System.out.println("ID = " + id);
 
             // *** ASSERT *** //
             // minio check

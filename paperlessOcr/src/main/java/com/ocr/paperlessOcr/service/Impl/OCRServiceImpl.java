@@ -51,7 +51,6 @@ public class OCRServiceImpl implements OCRService {
             var image = convertPdfToImages(data);
             ITesseract tesseract = new Tesseract();
             String result = tesseract.doOCR(image);
-            System.out.println(result);
 
             Optional<Document> document = documentService.getById(id);
             document.get().setContent(result);

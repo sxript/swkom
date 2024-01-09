@@ -1,7 +1,12 @@
 package com.paperless.persistence.entities;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 
+@Setter
+@Getter
 @Entity
 public class AuthUserUserPermissions {
 
@@ -26,29 +31,5 @@ public class AuthUserUserPermissions {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "permission_id", nullable = false)
     private AuthPermission permission;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(final Integer id) {
-        this.id = id;
-    }
-
-    public AuthUser getUser() {
-        return user;
-    }
-
-    public void setUser(final AuthUser user) {
-        this.user = user;
-    }
-
-    public AuthPermission getPermission() {
-        return permission;
-    }
-
-    public void setPermission(final AuthPermission permission) {
-        this.permission = permission;
-    }
 
 }

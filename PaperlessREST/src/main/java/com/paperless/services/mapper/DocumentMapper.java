@@ -22,31 +22,34 @@ import java.util.Set;
 @Service
 public abstract class DocumentMapper implements EntityMapper<DocumentDTO, Document> {
 
-    @Autowired
-    private DocumentsCorrespondentRepository correspondentRepository;
-    @Autowired
-    private DocumentsDocumenttypeRepository documentTypeRepository;
-    @Autowired
-    private DocumentsStoragepathRepository storagePathRepository;
-    @Autowired
-    private AuthUserRepository userRepository;
-    @Autowired
-    private DocumentsDocumentTagsRepository documentTagsRepository;
+    private final DocumentsCorrespondentRepository correspondentRepository;
+    private final DocumentsDocumenttypeRepository documentTypeRepository;
+    private final DocumentsStoragepathRepository storagePathRepository;
+    private final AuthUserRepository userRepository;
+    private final DocumentsDocumentTagsRepository documentTagsRepository;
 
+    @Autowired
+    protected DocumentMapper(DocumentsCorrespondentRepository correspondentRepository, DocumentsDocumenttypeRepository documentTypeRepository, DocumentsStoragepathRepository storagePathRepository, AuthUserRepository userRepository, DocumentsDocumentTagsRepository documentTagsRepository) {
+        this.correspondentRepository = correspondentRepository;
+        this.documentTypeRepository = documentTypeRepository;
+        this.storagePathRepository = storagePathRepository;
+        this.userRepository = userRepository;
+        this.documentTagsRepository = documentTagsRepository;
+    }
 
     @Mapping(target = "correspondent", source = "correspondent", qualifiedByName = "correspondentDto")
     @Mapping(target = "documentType", source = "documentType", qualifiedByName = "documentTypeDto")
     @Mapping(target = "storagePath", source = "storagePath", qualifiedByName = "storagePathDto")
     @Mapping(target = "documentDocumentsDocumentTagses", source = "tags", qualifiedByName = "tagsDto")
     @Mapping(target = "archiveSerialNumber", source = "archiveSerialNumber", qualifiedByName = "archiveSerialNumberDto")
-    abstract public Document toEntity(DocumentDTO dto);
+    public abstract Document toEntity(DocumentDTO dto);
 
     @Mapping(target = "correspondent", source = "correspondent", qualifiedByName = "correspondentEntity")
     @Mapping(target = "documentType", source = "documentType", qualifiedByName = "documentTypeEntity")
     @Mapping(target = "storagePath", source = "storagePath", qualifiedByName = "storagePathEntity")
     @Mapping(target = "tags", source = "documentDocumentsDocumentTagses", qualifiedByName = "tagsEntity")
     @Mapping(target = "createdDate", source = "created", qualifiedByName = "createdToCreatedDate")
-    abstract public DocumentDTO toDto(Document entity);
+    public abstract DocumentDTO toDto(Document entity);
 
     @Named("correspondentEntity")
     JsonNullable<Integer> map(Correspondent correspondent) {
@@ -70,7 +73,7 @@ public abstract class DocumentMapper implements EntityMapper<DocumentDTO, Docume
 
     @Named("tagsEntity")
     JsonNullable<List<Integer>> map(Set<DocumentTags> tags) {
-        return tags!=null ? JsonNullable.of( tags.stream().map( tag->(int)tag.getId() ).toList() ) : JsonNullable.undefined();
+        return tags!=null ? JsonNullable.of( tags.stream().map( tag-> tag.getId()).toList() ) : JsonNullable.undefined();
     }
 
     @Named("createdToCreatedDate")
@@ -110,7 +113,7 @@ public abstract class DocumentMapper implements EntityMapper<DocumentDTO, Docume
     Set<DocumentTags> mapDocTag(JsonNullable<List<Integer>> value) {
         if(value==null || !value.isPresent() || value.get()==null) return null;
 
-        return new HashSet<DocumentTags>(documentTagsRepository.findAllById(value.get()));
+        return new HashSet<>(documentTagsRepository.findAllById(value.get()));
     }
 
     @Named("archiveSerialNumberDto")

@@ -42,7 +42,7 @@ class DocumentNotesMapperTest {
     private DocumentsDocumentRepository documentRepository;
 
     @InjectMocks
-    private DocumentNotesMapper documentNotesMapper = Mappers.getMapper(DocumentNotesMapper.class);
+    private final DocumentNotesMapper documentNotesMapper = Mappers.getMapper(DocumentNotesMapper.class);
 
     private GetDocuments200ResponseResultsInnerNotesInner sampleNoteDto;
     private DocumentsNote sampleNoteEntity;

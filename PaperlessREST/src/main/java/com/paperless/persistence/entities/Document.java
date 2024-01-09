@@ -1,5 +1,8 @@
 package com.paperless.persistence.entities;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.time.OffsetDateTime;
 import java.util.Set;
@@ -8,6 +11,8 @@ import java.util.Set;
 @Entity
 public class Document {
 
+    @Setter
+    @Getter
     @Id
     @Column(nullable = false, updatable = false)
     @SequenceGenerator(
@@ -22,218 +27,102 @@ public class Document {
     )
     private Integer id;
 
+    @Setter
+    @Getter
     @Column(nullable = false, length = 128)
     private String title;
 
+    @Setter
+    @Getter
     @Column(nullable = false, columnDefinition = "text")
     private String content;
 
+    @Setter
+    @Getter
     @Column(nullable = false)
     private OffsetDateTime created;
 
+    @Setter
+    @Getter
     @Column(nullable = false)
     private OffsetDateTime modified;
 
+    @Setter
+    @Getter
     @Column(nullable = false, length = 32)
     private String checksum;
 
+    @Setter
+    @Getter
     @Column(nullable = false)
     private OffsetDateTime added;
 
+    @Setter
+    @Getter
     @Column(nullable = false, length = 11)
     private String storageType;
 
+    @Setter
+    @Getter
     @Column(length = 1024)
     private String filename;
 
+    @Setter
+    @Getter
     @Column
     private Integer archiveSerialNumber;
 
+    @Setter
+    @Getter
     @Column(nullable = false, length = 256)
     private String mimeType;
 
+    @Setter
+    @Getter
     @Column(length = 32)
     private String archiveChecksum;
 
+    @Setter
+    @Getter
     @Column(length = 1024)
     private String archiveFilename;
 
+    @Setter
+    @Getter
     @Column(length = 1024)
     private String originalFilename;
 
+    @Setter
+    @Getter
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "correspondent_id")
     private Correspondent correspondent;
 
+    @Setter
+    @Getter
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "document_type_id")
     private DocumentType documentType;
 
+    @Setter
+    @Getter
     @ManyToOne(fetch = FetchType.LAZY,cascade  = CascadeType.ALL)
     @JoinColumn(name = "storage_path_id")
     private StoragePath storagePath;
 
+    @Setter
+    @Getter
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "owner_id")
     private AuthUser owner;
 
+    @Setter
+    @Getter
     @OneToMany(mappedBy = "document")
     private Set<DocumentsNote> documentDocumentsNotes;
 
     @OneToMany(mappedBy = "document")
     private Set<DocumentTags> documentDocumentTags;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(final Integer id) {
-        this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(final String title) {
-        this.title = title;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(final String content) {
-        this.content = content;
-    }
-
-    public OffsetDateTime getCreated() {
-        return created;
-    }
-
-    public void setCreated(final OffsetDateTime created) {
-        this.created = created;
-    }
-
-    public OffsetDateTime getModified() {
-        return modified;
-    }
-
-    public void setModified(final OffsetDateTime modified) {
-        this.modified = modified;
-    }
-
-    public String getChecksum() {
-        return checksum;
-    }
-
-    public void setChecksum(final String checksum) {
-        this.checksum = checksum;
-    }
-
-    public OffsetDateTime getAdded() {
-        return added;
-    }
-
-    public void setAdded(final OffsetDateTime added) {
-        this.added = added;
-    }
-
-    public String getStorageType() {
-        return storageType;
-    }
-
-    public void setStorageType(final String storageType) {
-        this.storageType = storageType;
-    }
-
-    public String getFilename() {
-        return filename;
-    }
-
-    public void setFilename(final String filename) {
-        this.filename = filename;
-    }
-
-    public Integer getArchiveSerialNumber() {
-        return archiveSerialNumber;
-    }
-
-    public void setArchiveSerialNumber(final Integer archiveSerialNumber) {
-        this.archiveSerialNumber = archiveSerialNumber;
-    }
-
-    public String getMimeType() {
-        return mimeType;
-    }
-
-    public void setMimeType(final String mimeType) {
-        this.mimeType = mimeType;
-    }
-
-    public String getArchiveChecksum() {
-        return archiveChecksum;
-    }
-
-    public void setArchiveChecksum(final String archiveChecksum) {
-        this.archiveChecksum = archiveChecksum;
-    }
-
-    public String getArchiveFilename() {
-        return archiveFilename;
-    }
-
-    public void setArchiveFilename(final String archiveFilename) {
-        this.archiveFilename = archiveFilename;
-    }
-
-    public String getOriginalFilename() {
-        return originalFilename;
-    }
-
-    public void setOriginalFilename(final String originalFilename) {
-        this.originalFilename = originalFilename;
-    }
-
-    public Correspondent getCorrespondent() {
-        return correspondent;
-    }
-
-    public void setCorrespondent(final Correspondent correspondent) {
-        this.correspondent = correspondent;
-    }
-
-    public DocumentType getDocumentType() {
-        return documentType;
-    }
-
-    public void setDocumentType(final DocumentType documentType) {
-        this.documentType = documentType;
-    }
-
-    public StoragePath getStoragePath() {
-        return storagePath;
-    }
-
-    public void setStoragePath(final StoragePath storagePath) {
-        this.storagePath = storagePath;
-    }
-
-    public AuthUser getOwner() {
-        return owner;
-    }
-
-    public void setOwner(final AuthUser owner) {
-        this.owner = owner;
-    }
-
-    public Set<DocumentsNote> getDocumentDocumentsNotes() {
-        return documentDocumentsNotes;
-    }
-
-    public void setDocumentDocumentsNotes(final Set<DocumentsNote> documentDocumentsNotes) {
-        this.documentDocumentsNotes = documentDocumentsNotes;
-    }
 
     public Set<DocumentTags> getDocumentDocumentsDocumentTagses() {
         return documentDocumentTags;

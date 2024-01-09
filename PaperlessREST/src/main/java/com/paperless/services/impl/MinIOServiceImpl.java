@@ -68,14 +68,12 @@ public class MinIOServiceImpl implements MinIOService {
 
     public InputStream getObjectById(String id) throws RuntimeException {
         try {
-            InputStream stream = minioClient.getObject(
+            return minioClient.getObject(
                     GetObjectArgs.builder()
                             .bucket(bucketName)
                             .object(id)
                             .build()
             );
-            System.out.println("Document downloaded from MinIO.");
-            return stream;
         } catch (Exception e) {
             throw new RuntimeException("Error downloading document from MinIO", e);
         }

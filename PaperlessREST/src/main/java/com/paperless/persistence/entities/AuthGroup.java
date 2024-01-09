@@ -1,9 +1,14 @@
 package com.paperless.persistence.entities;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.util.Set;
 
 
+@Setter
+@Getter
 @Entity
 public class AuthGroup {
 
@@ -29,38 +34,5 @@ public class AuthGroup {
 
     @OneToMany(mappedBy = "group")
     private Set<AuthGroupPermissions> groupAuthGroupPermissionses;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(final Integer id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(final String name) {
-        this.name = name;
-    }
-
-    public Set<AuthUserGroups> getGroupAuthUserGroupses() {
-        return groupAuthUserGroupses;
-    }
-
-    public void setGroupAuthUserGroupses(final Set<AuthUserGroups> groupAuthUserGroupses) {
-        this.groupAuthUserGroupses = groupAuthUserGroupses;
-    }
-
-    public Set<AuthGroupPermissions> getGroupAuthGroupPermissionses() {
-        return groupAuthGroupPermissionses;
-    }
-
-    public void setGroupAuthGroupPermissionses(
-            final Set<AuthGroupPermissions> groupAuthGroupPermissionses) {
-        this.groupAuthGroupPermissionses = groupAuthGroupPermissionses;
-    }
 
 }

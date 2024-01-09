@@ -79,7 +79,6 @@ public class PaperlessApplication implements PaperlessApi {
             byte[] documentContent = documentFile.getBytes();
             var fileContentString = JsonNullable.of(Base64.getEncoder().encodeToString(documentContent));
 
-            System.out.println("filetype: " + fileType.get());
 
             if (!fileType.get().equals("pdf"))
                 return new ResponseEntity<>(HttpStatus.UNSUPPORTED_MEDIA_TYPE);

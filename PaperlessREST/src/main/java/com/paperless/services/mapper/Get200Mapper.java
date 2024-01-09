@@ -8,7 +8,7 @@ import com.paperless.services.dto.gets.GetDocuments200ResponseResultsInnerNotesI
 import org.mapstruct.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.security.Permissions;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -20,21 +20,25 @@ import java.time.ZoneOffset;
         nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
 public abstract class Get200Mapper implements EntityMapper<GetDocument200Response, Document>{
 
-    @Autowired
-    private DocumentsCorrespondentRepository correspondentRepository;
-    @Autowired
-    private DocumentsDocumenttypeRepository documentTypeRepository;
-    @Autowired
-    private DocumentsStoragepathRepository storagePathRepository;
-    @Autowired
-    private AuthUserRepository userRepository;
-    @Autowired
-    private DocumentsDocumentTagsRepository documentTagsRepository;
+    private final DocumentsCorrespondentRepository correspondentRepository;
+    private final DocumentsDocumenttypeRepository documentTypeRepository;
+    private final DocumentsStoragepathRepository storagePathRepository;
+    private final AuthUserRepository userRepository;
+    private final DocumentsDocumentTagsRepository documentTagsRepository;
+
+    private final PermissionsMapper permissionsMapper;
+    private final DocumentNotesMapper documentNotesMapper;
 
     @Autowired
-    private PermissionsMapper PermissionsMapper;
-    @Autowired
-    private DocumentNotesMapper documentNotesMapper;
+    protected Get200Mapper(DocumentsCorrespondentRepository correspondentRepository, DocumentsDocumenttypeRepository documentTypeRepository, DocumentsStoragepathRepository storagePathRepository, AuthUserRepository userRepository, DocumentsDocumentTagsRepository documentTagsRepository, PermissionsMapper PermissionsMapper, DocumentNotesMapper documentNotesMapper) {
+        this.correspondentRepository = correspondentRepository;
+        this.documentTypeRepository = documentTypeRepository;
+        this.storagePathRepository = storagePathRepository;
+        this.userRepository = userRepository;
+        this.documentTagsRepository = documentTagsRepository;
+        this.permissionsMapper = PermissionsMapper;
+        this.documentNotesMapper = documentNotesMapper;
+    }
 
     @Mapping(target = "correspondent", source = "correspondent", qualifiedByName = "correspondentDto")
     @Mapping(target = "documentType", source = "documentType", qualifiedByName = "documentTypeDto")
@@ -46,7 +50,7 @@ public abstract class Get200Mapper implements EntityMapper<GetDocument200Respons
     @Mapping(target = "created", source = "createdDate", qualifiedByName = "createdDto")
     @Mapping(target = "modified", source = "modified", qualifiedByName = "modifyDto")
     @Mapping(target = "added", source = "added", qualifiedByName = "addedDto")
-    abstract public Document toEntity(GetDocument200Response dto);
+    public abstract Document toEntity(GetDocument200Response dto);
 
     @Mapping(target = "correspondent", source = "correspondent", qualifiedByName = "correspondentEntity")
     @Mapping(target = "documentType", source = "documentType", qualifiedByName = "documentTypeEntity")
@@ -59,7 +63,7 @@ public abstract class Get200Mapper implements EntityMapper<GetDocument200Respons
     @Mapping(target = "notes", source = "documentDocumentsNotes", qualifiedByName = "notesEntity")
     @Mapping(target = "modified", source = "modified", qualifiedByName = "modifyEntity")
     @Mapping(target = "added", source = "added", qualifiedByName = "addedEntity")
-    abstract public GetDocument200Response toDto(Document entity);
+    public abstract GetDocument200Response toDto(Document entity);
 
     @Named("correspondentEntity")
     Integer map(Correspondent correspondent) {
@@ -89,14 +93,14 @@ public abstract class Get200Mapper implements EntityMapper<GetDocument200Respons
 
     @Named("tagsEntity")
     List<Integer> map(Set<DocumentTags> tags) {
-        if(tags == null) return null;
-        return tags.stream().map( tag->(int)tag.getId() ).toList();
+        if(tags == null) return Collections.emptyList();
+        return tags.stream().map(DocumentTags::getId).toList();
     }
 
     @Named("permissionsEntity")
     GetDocument200ResponsePermissions mapPermissions(AuthUser owner) {
         if(owner == null) return null;
-        return PermissionsMapper.toDto(owner);
+        return permissionsMapper.toDto(owner);
     }
 
     @Named("notesEntity")
@@ -139,7 +143,7 @@ public abstract class Get200Mapper implements EntityMapper<GetDocument200Respons
     @Named("tagsDto")
     Set<DocumentTags> mapDocTag(List<Integer> value) {
         if(value == null) return null;
-        return new HashSet<DocumentTags>(documentTagsRepository.findAllById(value));
+        return new HashSet<>(documentTagsRepository.findAllById(value));
     }
 
     @Named("archiveSerialNumberDto")
@@ -152,7 +156,7 @@ public abstract class Get200Mapper implements EntityMapper<GetDocument200Respons
     Set<DocumentsNote> mapNotes(List<GetDocuments200ResponseResultsInnerNotesInner> value) {
         if(value==null || value.isEmpty()) return null;
 
-        HashSet<DocumentsNote> notes = new HashSet<DocumentsNote>();
+        HashSet<DocumentsNote> notes = new HashSet<>();
 
         for(GetDocuments200ResponseResultsInnerNotesInner note : value) {
             notes.add(documentNotesMapper.toEntity(note));

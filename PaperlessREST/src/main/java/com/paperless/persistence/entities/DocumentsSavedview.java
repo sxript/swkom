@@ -1,9 +1,14 @@
 package com.paperless.persistence.entities;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.util.Set;
 
 
+@Setter
+@Getter
 @Entity
 public class DocumentsSavedview {
 
@@ -42,70 +47,5 @@ public class DocumentsSavedview {
 
     @OneToMany(mappedBy = "savedView")
     private Set<DocumentsSavedviewfilterrule> savedViewDocumentsSavedviewfilterrules;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(final Integer id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(final String name) {
-        this.name = name;
-    }
-
-    public Boolean getShowOnDashboard() {
-        return showOnDashboard;
-    }
-
-    public void setShowOnDashboard(final Boolean showOnDashboard) {
-        this.showOnDashboard = showOnDashboard;
-    }
-
-    public Boolean getShowInSidebar() {
-        return showInSidebar;
-    }
-
-    public void setShowInSidebar(final Boolean showInSidebar) {
-        this.showInSidebar = showInSidebar;
-    }
-
-    public String getSortField() {
-        return sortField;
-    }
-
-    public void setSortField(final String sortField) {
-        this.sortField = sortField;
-    }
-
-    public Boolean getSortReverse() {
-        return sortReverse;
-    }
-
-    public void setSortReverse(final Boolean sortReverse) {
-        this.sortReverse = sortReverse;
-    }
-
-    public AuthUser getOwner() {
-        return owner;
-    }
-
-    public void setOwner(final AuthUser owner) {
-        this.owner = owner;
-    }
-
-    public Set<DocumentsSavedviewfilterrule> getSavedViewDocumentsSavedviewfilterrules() {
-        return savedViewDocumentsSavedviewfilterrules;
-    }
-
-    public void setSavedViewDocumentsSavedviewfilterrules(
-            final Set<DocumentsSavedviewfilterrule> savedViewDocumentsSavedviewfilterrules) {
-        this.savedViewDocumentsSavedviewfilterrules = savedViewDocumentsSavedviewfilterrules;
-    }
 
 }

@@ -1,7 +1,12 @@
 package com.paperless.persistence.entities;
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 
 
+@Setter
+@Getter
 @Entity
 public class AuthUserGroups {
 
@@ -26,29 +31,5 @@ public class AuthUserGroups {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "group_id", nullable = false)
     private AuthGroup group;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(final Integer id) {
-        this.id = id;
-    }
-
-    public AuthUser getUser() {
-        return user;
-    }
-
-    public void setUser(final AuthUser user) {
-        this.user = user;
-    }
-
-    public AuthGroup getGroup() {
-        return group;
-    }
-
-    public void setGroup(final AuthGroup group) {
-        this.group = group;
-    }
 
 }
