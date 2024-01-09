@@ -34,12 +34,9 @@ public class DocumentServiceImplTest {
 
     @Test
    public void saveDocument_ValidDocument_CallsRepositorySave() {
-        // Arrange
 
-        // Act
         documentService.saveDocument(sampleDocument);
 
-        // Assert
         verify(documentRepository, times(1)).save(sampleDocument);
     }
 
