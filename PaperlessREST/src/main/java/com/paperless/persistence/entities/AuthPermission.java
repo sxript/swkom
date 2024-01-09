@@ -1,9 +1,14 @@
 package com.paperless.persistence.entities;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.util.Set;
 
 
+@Setter
+@Getter
 @Entity
 public class AuthPermission {
 
@@ -35,55 +40,5 @@ public class AuthPermission {
 
     @OneToMany(mappedBy = "permission")
     private Set<AuthUserUserPermissions> permissionAuthUserUserPermissionses;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(final Integer id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(final String name) {
-        this.name = name;
-    }
-
-    public String getContentType() {
-        return contentType;
-    }
-
-    public void setContentType(final String contentType) {
-        this.contentType = contentType;
-    }
-
-    public String getCodename() {
-        return codename;
-    }
-
-    public void setCodename(final String codename) {
-        this.codename = codename;
-    }
-
-    public Set<AuthGroupPermissions> getPermissionAuthGroupPermissionses() {
-        return permissionAuthGroupPermissionses;
-    }
-
-    public void setPermissionAuthGroupPermissionses(
-            final Set<AuthGroupPermissions> permissionAuthGroupPermissionses) {
-        this.permissionAuthGroupPermissionses = permissionAuthGroupPermissionses;
-    }
-
-    public Set<AuthUserUserPermissions> getPermissionAuthUserUserPermissionses() {
-        return permissionAuthUserUserPermissionses;
-    }
-
-    public void setPermissionAuthUserUserPermissionses(
-            final Set<AuthUserUserPermissions> permissionAuthUserUserPermissionses) {
-        this.permissionAuthUserUserPermissionses = permissionAuthUserUserPermissionses;
-    }
 
 }

@@ -1,8 +1,13 @@
 package com.paperless.persistence.entities;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 
 
+@Setter
+@Getter
 @Entity
 public class DocumentsUisettings {
 
@@ -26,29 +31,5 @@ public class DocumentsUisettings {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private AuthUser user;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(final Integer id) {
-        this.id = id;
-    }
-
-    public String getSettings() {
-        return settings;
-    }
-
-    public void setSettings(final String settings) {
-        this.settings = settings;
-    }
-
-    public AuthUser getUser() {
-        return user;
-    }
-
-    public void setUser(final AuthUser user) {
-        this.user = user;
-    }
 
 }

@@ -1,5 +1,8 @@
 package com.paperless.persistence.entities;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -7,6 +10,8 @@ import java.util.Set;
 @Entity
 public class Correspondent {
 
+    @Setter
+    @Getter
     @Id
     @Column(nullable = false, updatable = false)
     @SequenceGenerator(
@@ -21,18 +26,28 @@ public class Correspondent {
     )
     private Integer id;
 
+    @Setter
+    @Getter
     @Column(nullable = false, length = 128)
     private String name;
 
+    @Setter
+    @Getter
     @Column(nullable = false, length = 256)
     private String match;
 
+    @Setter
+    @Getter
     @Column(nullable = false)
     private Integer matchingAlgorithm;
 
+    @Setter
+    @Getter
     @Column(nullable = false)
     private Boolean isInsensitive;
 
+    @Setter
+    @Getter
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "owner_id")
     private AuthUser owner;
@@ -40,56 +55,10 @@ public class Correspondent {
     @OneToMany(mappedBy = "correspondent")
     private Set<Document> correspondentDocuments;
 
+    @Setter
+    @Getter
     @OneToMany(mappedBy = "assignCorrespondent")
     private Set<PaperlessMailMailrule> assignCorrespondentPaperlessMailMailrules;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(final Integer id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(final String name) {
-        this.name = name;
-    }
-
-    public String getMatch() {
-        return match;
-    }
-
-    public void setMatch(final String match) {
-        this.match = match;
-    }
-
-    public Integer getMatchingAlgorithm() {
-        return matchingAlgorithm;
-    }
-
-    public void setMatchingAlgorithm(final Integer matchingAlgorithm) {
-        this.matchingAlgorithm = matchingAlgorithm;
-    }
-
-    public Boolean getIsInsensitive() {
-        return isInsensitive;
-    }
-
-    public void setIsInsensitive(final Boolean isInsensitive) {
-        this.isInsensitive = isInsensitive;
-    }
-
-    public AuthUser getOwner() {
-        return owner;
-    }
-
-    public void setOwner(final AuthUser owner) {
-        this.owner = owner;
-    }
 
     public Set<Document> getCorrespondentDocumentsDocuments() {
         return correspondentDocuments;
@@ -98,15 +67,6 @@ public class Correspondent {
     public void setCorrespondentDocumentsDocuments(
             final Set<Document> correspondentDocuments) {
         this.correspondentDocuments = correspondentDocuments;
-    }
-
-    public Set<PaperlessMailMailrule> getAssignCorrespondentPaperlessMailMailrules() {
-        return assignCorrespondentPaperlessMailMailrules;
-    }
-
-    public void setAssignCorrespondentPaperlessMailMailrules(
-            final Set<PaperlessMailMailrule> assignCorrespondentPaperlessMailMailrules) {
-        this.assignCorrespondentPaperlessMailMailrules = assignCorrespondentPaperlessMailMailrules;
     }
 
 }

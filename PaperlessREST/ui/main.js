@@ -1,5 +1,5 @@
 globalThis.$localize = Object.assign(globalThis.$localize || {}, { locale: "en-US" });
-"use strict"; (function (global) { global.ng = global.ng || {}; global.ng.common = global.ng.common || {}; global.ng.common.locales = global.ng.common.locales || {}; const u = undefined; function plural(val) { const n = val, i = Math.floor(Math.abs(val)), v = val.toString().replace(/^[^.]*\.?/, "").length; if (i === 1 && v === 0) return 1; return 5 } global.ng.common.locales["en"] = ["en", [["a", "p"], ["AM", "PM"], u], [["AM", "PM"], u, u], [["S", "M", "T", "W", "T", "F", "S"], ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"], ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"], ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"]], u, [["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"], ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"], ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]], u, [["B", "A"], ["BC", "AD"], ["Before Christ", "Anno Domini"]], 0, [6, 0], ["M/d/yy", "MMM d, y", "MMMM d, y", "EEEE, MMMM d, y"], ["h:mm a", "h:mm:ss a", "h:mm:ss a z", "h:mm:ss a zzzz"], ["{1}, {0}", u, "{1} 'at' {0}", u], [".", ",", ";", "%", "+", "-", "E", "\xD7", "\u2030", "\u221E", "NaN", ":"], ["#,##0.###", "#,##0%", "\xA4#,##0.00", "#E0"], "USD", "$", "US Dollar", {}, "ltr", plural, [[["mi", "n", "in the morning", "in the afternoon", "in the evening", "at night"], ["midnight", "noon", "in the morning", "in the afternoon", "in the evening", "at night"], u], [["midnight", "noon", "morning", "afternoon", "evening", "night"], u, u], ["00:00", "12:00", ["06:00", "12:00"], ["12:00", "18:00"], ["18:00", "21:00"], ["21:00", "06:00"]]]] })(typeof globalThis !== "undefined" && globalThis || typeof global !== "undefined" && global || typeof window !== "undefined" && window);;
+"use strict"; (function (global) { global.ng = global.ng || {}; global.ng.common = global.ng.common || {}; global.ng.common.locales = global.ng.common.locales || {}; const u = undefined; function plural(val) { const n = val, i = Math.floor(Math.abs(val)), v = val.toString().replace(/^[^.]*\.?/, "").length; if (i === 1 && v === 0) return 1; return 5 } global.ng.common.locales["en"] = ["en", [["a", "p"], ["AM", "PM"], u], [["AM", "PM"], u, u], [["S", "M", "T", "W", "T", "F", "S"], ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"], ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"], ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"]], u, [["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"], ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"], ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]], u, [["B", "A"], ["BC", "AD"], ["Before Christ", "Anno Domini"]], 0, [6, 0], ["M/d/yy", "MMM d, y", "MMMM d, y", "EEEE, MMMM d, y"], ["h:mm a", "h:mm:ss a", "h:mm:ss a z", "h:mm:ss a zzzz"], ["{1}, {0}", u, "{1} 'at' {0}", u], [".", ",", ";", "%", "+", "-", "E", "\xD7", "\u2030", "\u221E", "NaN", ":"], ["#,##0.###", "#,##0%", "\xA4#,##0.00", "#E0"], "USD", "$", "US Dollar", {}, "ltr", plural, [[["mi", "n", "in the morning", "in the afternoon", "in the evening", "at night"], ["midnight", "noon", "in the morning", "in the afternoon", "in the evening", "at night"], u], [["midnight", "noon", "morning", "afternoon", "evening", "night"], u, u], ["00:00", "12:00", ["06:00", "12:00"], ["12:00", "18:00"], ["18:00", "21:00"], ["21:00", "06:00"]]]] })(typeof globalThis !== "undefined" && globalThis || typeof global !== "undefined" && global || typeof window !== "undefined" && window);
 (self["webpackChunkpaperless_ui"] = self["webpackChunkpaperless_ui"] || []).push([["main"], {
 
 /***/ 158:
@@ -16629,7 +16629,7 @@ globalThis.$localize = Object.assign(globalThis.$localize || {}, { locale: "en-U
                 delay: 500000
               };
               if (reloadRequired) {
-                ;
+
                 savedToast.content = "Settings were saved successfully. Reload is required to apply some changes.", savedToast.actionName = "Reload now";
                 savedToast.action = () => {
                   location.reload();
@@ -22892,7 +22892,7 @@ globalThis.$localize = Object.assign(globalThis.$localize || {}, { locale: "en-U
        * @return  Array           The HSL representation
        */
       function rgbToHsl(r, g, b) {
-        ;
+
         r /= 255, g /= 255, b /= 255;
         var max = Math.max(r, g, b),
           min = Math.min(r, g, b);

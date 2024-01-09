@@ -1,9 +1,14 @@
 package com.paperless.persistence.entities;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.time.OffsetDateTime;
 
 
+@Setter
+@Getter
 @Entity
 public class PaperlessMailProcessedmail {
 
@@ -49,85 +54,5 @@ public class PaperlessMailProcessedmail {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "rule_id", nullable = false)
     private PaperlessMailMailrule rule;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(final Integer id) {
-        this.id = id;
-    }
-
-    public String getFolder() {
-        return folder;
-    }
-
-    public void setFolder(final String folder) {
-        this.folder = folder;
-    }
-
-    public String getUid() {
-        return uid;
-    }
-
-    public void setUid(final String uid) {
-        this.uid = uid;
-    }
-
-    public String getSubject() {
-        return subject;
-    }
-
-    public void setSubject(final String subject) {
-        this.subject = subject;
-    }
-
-    public OffsetDateTime getReceived() {
-        return received;
-    }
-
-    public void setReceived(final OffsetDateTime received) {
-        this.received = received;
-    }
-
-    public OffsetDateTime getProcessed() {
-        return processed;
-    }
-
-    public void setProcessed(final OffsetDateTime processed) {
-        this.processed = processed;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(final String status) {
-        this.status = status;
-    }
-
-    public String getError() {
-        return error;
-    }
-
-    public void setError(final String error) {
-        this.error = error;
-    }
-
-    public AuthUser getOwner() {
-        return owner;
-    }
-
-    public void setOwner(final AuthUser owner) {
-        this.owner = owner;
-    }
-
-    public PaperlessMailMailrule getRule() {
-        return rule;
-    }
-
-    public void setRule(final PaperlessMailMailrule rule) {
-        this.rule = rule;
-    }
 
 }

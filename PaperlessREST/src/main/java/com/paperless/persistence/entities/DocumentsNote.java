@@ -1,9 +1,14 @@
 package com.paperless.persistence.entities;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.time.OffsetDateTime;
 
 
+@Setter
+@Getter
 @Entity
 public class DocumentsNote {
 
@@ -34,45 +39,5 @@ public class DocumentsNote {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private AuthUser user;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(final Integer id) {
-        this.id = id;
-    }
-
-    public String getNote() {
-        return note;
-    }
-
-    public void setNote(final String note) {
-        this.note = note;
-    }
-
-    public OffsetDateTime getCreated() {
-        return created;
-    }
-
-    public void setCreated(final OffsetDateTime created) {
-        this.created = created;
-    }
-
-    public Document getDocument() {
-        return document;
-    }
-
-    public void setDocument(final Document document) {
-        this.document = document;
-    }
-
-    public AuthUser getUser() {
-        return user;
-    }
-
-    public void setUser(final AuthUser user) {
-        this.user = user;
-    }
 
 }

@@ -3,6 +3,7 @@ package com.paperless.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.paperless.services.dto.DocumentDTO;
+import com.paperless.services.dto.gets.GetDocument200Response;
 import com.paperless.services.dto.gets.GetDocuments200Response;
 import com.paperless.services.impl.DocumentServiceImpl;
 import com.rabbitmq.client.AMQP;
@@ -66,20 +67,31 @@ public class PaperlessApplication implements PaperlessApi {
 
         try {
             MultipartFile documentFile = document.get(0);
+
+            if (documentFile.isEmpty())
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
+
             String name = documentFile.getOriginalFilename();
             var filename = JsonNullable.of(documentFile.getOriginalFilename());
             var createtionTime = OffsetDateTime.now();
-
             var fileType = JsonNullable.of(filename.get().split("\\.")[1]);
             byte[] documentContent = documentFile.getBytes();
             var fileContentString = JsonNullable.of(Base64.getEncoder().encodeToString(documentContent));
 
-            DocumentDTO documentDTO = DocumentDTO.builder().title(filename).content(fileContentString).originalFileName(filename).created(createtionTime)
-                    .modified(createtionTime).added(createtionTime).created(OffsetDateTime.now())
-                            .added(OffsetDateTime.now()).modified(OffsetDateTime.now()).build();
 
-            documentService.uploadDocument(documentDTO, documentFile);
-            return new ResponseEntity<>(HttpStatus.OK);
+            if (!fileType.get().equals("pdf"))
+                return new ResponseEntity<>(HttpStatus.UNSUPPORTED_MEDIA_TYPE);
+
+
+            DocumentDTO documentDTO = DocumentDTO.builder().title(filename).content(JsonNullable.of("")).originalFileName(filename).created(createtionTime)
+                    .modified(createtionTime).added(createtionTime).created(OffsetDateTime.now())
+                    .added(OffsetDateTime.now()).modified(OffsetDateTime.now()).build();
+
+
+            if (documentService.uploadDocument(documentDTO, documentFile))
+                return new ResponseEntity<>(HttpStatus.OK);
+            else return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 
         } catch (Exception e) {
             log.error(e.getMessage());
@@ -87,15 +99,21 @@ public class PaperlessApplication implements PaperlessApi {
         }
     }
 
-    public static void saveByteArrayToFile(byte[] content, String filePath) throws IOException {
+    private void saveByteArrayToFile(byte[] content, String filePath) throws IOException {
         try (FileOutputStream fos = new FileOutputStream(filePath)) {
             fos.write(content);
         }
     }
 
+    @Override
+    public ResponseEntity<GetDocuments200Response> getDocuments(Integer page, Integer pageSize, String query, String ordering, List<Integer> tagsIdAll, Integer documentTypeId, Integer storagePathIdIn, Integer correspondentId, Boolean truncateContent) {
+        try {
+            return documentService.getDocuments(page, pageSize, query, ordering, tagsIdAll, documentTypeId, storagePathIdIn, correspondentId, truncateContent);
+        } catch (IOException e) {
+            log.error(e.getMessage());
+            return ResponseEntity.internalServerError().build();
+        }
+    }
 
-//    @Override
-//    public ResponseEntity<GetDocuments200Response> getDocuments(Integer page, Integer pageSize, String query, String ordering, List<Integer> tagsIdAll, Integer documentTypeId, Integer storagePathIdIn, Integer correspondentId, Boolean truncateContent) {
-//        documentService.getDocuments();
-//    }
+
 }

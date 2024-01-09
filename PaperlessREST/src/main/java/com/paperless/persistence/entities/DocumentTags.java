@@ -1,7 +1,12 @@
 package com.paperless.persistence.entities;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 
+@Setter
+@Getter
 @Entity
 public class DocumentTags {
 
@@ -26,29 +31,5 @@ public class DocumentTags {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "tag_id", nullable = false)
     private DocumentsTag tag;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(final Integer id) {
-        this.id = id;
-    }
-
-    public Document getDocument() {
-        return document;
-    }
-
-    public void setDocument(final Document document) {
-        this.document = document;
-    }
-
-    public DocumentsTag getTag() {
-        return tag;
-    }
-
-    public void setTag(final DocumentsTag tag) {
-        this.tag = tag;
-    }
 
 }

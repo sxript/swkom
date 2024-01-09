@@ -3,7 +3,7 @@ WORKDIR /app
 # Install Maven (if not already installed)
 RUN apk --no-cache add maven
 # copy sourcecode
-COPY . /app
+COPY PaperlessREST /app
 # Build the application --> skit tests for now
 RUN mvn package -DskipTests
 

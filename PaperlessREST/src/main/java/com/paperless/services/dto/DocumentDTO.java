@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import com.paperless.services.dto.gets.GetDocuments200ResponseResultsInner;
 import lombok.Builder;
 import org.openapitools.jackson.nullable.JsonNullable;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -348,6 +349,26 @@ public class DocumentDTO {
     this.archivedFileName = archivedFileName;
   }
 
+
+  public GetDocuments200ResponseResultsInner toGetDocuments200ResponseResultsInner(){
+    return new GetDocuments200ResponseResultsInner()
+            .id(id)
+            .correspondent(correspondent.isPresent() ? correspondent.get() : null)
+            .documentType(documentType.isPresent() ? documentType.get() : null)
+            .storagePath(storagePath.isPresent() ? storagePath.get() : null)
+            .title(title.isPresent() ? title.get() : null)
+            .content(content.isPresent() ? content.get() : null)
+            .tags(tags.isPresent() ? tags.get() : null)
+            .created(created == null ? null : created.toString())
+            .createdDate(createdDate == null ? null : createdDate.toString())
+            .modified(modified == null ? null : modified.toString())
+            .added(added == null ? null : added.toString())
+            .archiveSerialNumber(archiveSerialNumber==null ? null : archiveSerialNumber.isPresent() ? Integer.valueOf(archiveSerialNumber.get()) : null)
+            .originalFileName(originalFileName==null ? null :originalFileName.isPresent() ? originalFileName.get() : null)
+            .archivedFileName(archivedFileName==null ? null :archivedFileName.isPresent() ? archivedFileName.get() : null)
+            .owner(1)
+            .userCanChange(true);
+  }
   @Override
   public boolean equals(Object o) {
     if (this == o) {
