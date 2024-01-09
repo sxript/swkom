@@ -1,5 +1,6 @@
 package com.paperless.integrationTests;
 
+import com.paperless.config.ApiConfig;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
@@ -7,8 +8,6 @@ import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
-import java.time.OffsetDateTime;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import io.restassured.path.json.JsonPath;
@@ -17,17 +16,14 @@ import org.springframework.core.annotation.Order;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.hasItem;
-import static org.hibernate.validator.internal.util.Contracts.assertTrue;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class DocumentServiceTest {
-
-
+class DocumentServiceTest {
     @Test
     @Order(1)
-    public void uploadDocumentTest() {
-        RestAssured.baseURI = "http://localhost";
-        RestAssured.port = 8088;
+    void uploadDocumentTest() {
+        RestAssured.baseURI = ApiConfig.BASE_URL;
+        RestAssured.port = ApiConfig.PORT;
         File testUploadFile = new File("src/test/resources/TestPdf.pdf");
         Response response = given()
                 .multiPart("document", testUploadFile)
@@ -45,9 +41,9 @@ public class DocumentServiceTest {
 
 
     @Test
-    public void searchDocuments() throws InterruptedException {
-        RestAssured.baseURI = "http://localhost";
-        RestAssured.port = 8088;
+    void searchDocuments() throws InterruptedException {
+        RestAssured.baseURI = ApiConfig.BASE_URL;
+        RestAssured.port = ApiConfig.PORT;
 
         // Wait for 10 seconds to ensure that indexing of the document is complete
         Thread.sleep(10000);
@@ -64,16 +60,8 @@ public class DocumentServiceTest {
                 .body()
                 .asString();
 
-        System.out.println(response);
-
         // Parse the response body and extract the id of the test.pdf document
         JsonPath jsonPath = new JsonPath(response);
         List<Map<String, Object>> results = jsonPath.getList("results");
-
-
-
     }
-
-
-
 }
