@@ -1,76 +1,69 @@
-package com.ocr.paperlessOcr.service;
+package com.ocr.paperlessOcr.service.Impl;
 
 import com.ocr.paperlessOcr.persistence.entities.Document;
-import com.ocr.paperlessOcr.persistence.entities.StoragePath;
-import com.ocr.paperlessOcr.persistence.repositories.DocumentsDocumentRepository;
-import com.ocr.paperlessOcr.persistence.repositories.DocumentsStoragepathRepository;
+
+import com.ocr.paperlessOcr.service.OCRService;
+
 import io.minio.GetObjectArgs;
 import io.minio.MinioClient;
 import io.minio.errors.MinioException;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.pdfbox.Loader;
 import org.apache.pdfbox.rendering.PDFRenderer;
 import org.apache.pdfbox.text.PDFTextStripper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
+
 import org.springframework.stereotype.Service;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import net.sourceforge.tess4j.ITesseract;
 import net.sourceforge.tess4j.Tesseract;
-import net.sourceforge.tess4j.TesseractException;
-
-import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
-import java.util.List;
+
+import java.time.OffsetDateTime;
 import java.util.Optional;
 
 @Service
+@Slf4j
 public class OCRServiceImpl implements OCRService {
     private final MinioClient minioClient;
-    private final SearchIndexService searchIndexService;
-    private final DocumentsDocumentRepository documentsDocumentRepository;
+    private final ElasticSearchServiceImpl searchIndexService;
+    private final DocumentServiceImpl documentService;
 
     @Autowired
-    public OCRServiceImpl(MinioClient minioClient, DocumentsDocumentRepository documentsDocumentRepository, SearchIndexService searchIndexService) {
+    public OCRServiceImpl(MinioClient minioClient, ElasticSearchServiceImpl searchIndexService, DocumentServiceImpl documentService) {
         this.minioClient = minioClient;
-        this.documentsDocumentRepository = documentsDocumentRepository;
         this.searchIndexService = searchIndexService;
+        this.documentService = documentService;
     }
 
     @Override
     public void performOCR(String id) {
-
-        System.out.println("in performing");
 
         var data = getPdfData(id);
 
 
         try {
             var image = convertPdfToImages(data);
-            System.out.println(image);
-            System.out.println("----------------");
-
             ITesseract tesseract = new Tesseract();
             String result = tesseract.doOCR(image);
             System.out.println(result);
 
-            Optional<Document> document = documentsDocumentRepository.findById(Integer.parseInt(id));
-
+            Optional<Document> document = documentService.getById(id);
             document.get().setContent(result);
+            document.get().setModified(OffsetDateTime.now());
 
             //ToDo: check the Optional
-            documentsDocumentRepository.save(document.get());
+
+            documentService.saveDocument(document.get());
             // do ElasticSearch indexing
             try {
-                System.out.println("line 71");
                 searchIndexService.indexDocument(document.get());
-                System.out.println("line 73");
             } catch (IOException e) {
                 System.out.println("Error: " + e.getMessage());
             }
@@ -78,7 +71,6 @@ public class OCRServiceImpl implements OCRService {
 
         } catch (Exception ex) {
             System.out.println(ex);
-
         }
     }
 
@@ -86,14 +78,11 @@ public class OCRServiceImpl implements OCRService {
     private byte[] getPdfData(String storageId) {
 
 
-        Optional<Document> document = documentsDocumentRepository.findById(Integer.parseInt(storageId));
-
-        System.out.println(document.get().getStoragePath().getPath() + "  Id: ");
+        Optional<Document> document = documentService.getById(storageId);
 
 
         String[] bucketAndFileName = extractBucketAndFileName(document.get().getStoragePath().getPath());
 
-        System.out.println("line 79");
         if (bucketAndFileName == null) return null;
 
         String bucketName = bucketAndFileName[0];

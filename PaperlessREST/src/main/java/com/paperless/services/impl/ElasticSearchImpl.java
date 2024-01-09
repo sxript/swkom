@@ -9,6 +9,7 @@ import com.paperless.configuration.ElasticSearchConfig;
 import com.paperless.persistence.entities.Document;
 import com.paperless.persistence.repositories.DocumentsDocumentRepository;
 import com.paperless.services.SearchIndexService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import java.io.IOException;
@@ -16,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
+@Slf4j
 public class ElasticSearchImpl implements SearchIndexService {
 
     private final ElasticsearchClient esClient;
@@ -30,9 +32,6 @@ public class ElasticSearchImpl implements SearchIndexService {
     @Override
     public List<Document> searchDocument(String query) throws IOException {
 
-        System.out.println(query);
-        System.out.println("Query");
-
         SearchResponse<ObjectNode> response = esClient.search(s -> s
                         .index(ElasticSearchConfig.DOCUMENTS_INDEX_NAME)
                         .size(1000)
@@ -41,9 +40,9 @@ public class ElasticSearchImpl implements SearchIndexService {
                 ObjectNode.class
         );
 
-
+//ToDo: Logger
         if (response.hits().total().value() != 0) {
-            System.out.println("Found {} documents" + response.hits().total().value());
+            System.out.println(("Found {} documents" + response.hits().total().value()));
         } else {
             System.out.println("No documents found");
         }
@@ -69,8 +68,6 @@ public class ElasticSearchImpl implements SearchIndexService {
         //get documents from repository
         List<Document> documentEntities = new ArrayList<>();
         for (Integer documentId : documentIds) {
-            System.out.println(documentId);
-//            Optional<Document> document = documentRepository.findById(documentId);
             documentRepository.findById(documentId).ifPresent(documentEntities::add);
         }
 

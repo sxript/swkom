@@ -23,7 +23,7 @@ public class RabbitMQService {
 
     public void saveInQueue(String queueMessage) {
         rabbitTemplate.convertAndSend(ocrScanQueue.getName(), queueMessage);
-        log.info("Document uploaded and sent to RabbitMQ for OCR processing.");
+//        log.info("Document uploaded and sent to RabbitMQ for OCR processing.");
     }
 
 }

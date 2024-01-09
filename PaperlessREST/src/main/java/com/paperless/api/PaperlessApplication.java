@@ -83,7 +83,7 @@ public class PaperlessApplication implements PaperlessApi {
             return new ResponseEntity<>(HttpStatus.OK);
 
         } catch (Exception e) {
-            log.error(e.getMessage());
+            System.out.println(e.getMessage());
             return ResponseEntity.internalServerError().build();
         }
     }
@@ -96,8 +96,6 @@ public class PaperlessApplication implements PaperlessApi {
 
     @Override
     public ResponseEntity<GetDocuments200Response> getDocuments(Integer page, Integer pageSize, String query, String ordering, List<Integer> tagsIdAll, Integer documentTypeId, Integer storagePathIdIn, Integer correspondentId, Boolean truncateContent) {
-
-        System.out.println("i am in ");
         try {
             return documentService.getDocuments(page, pageSize, query, ordering, tagsIdAll, documentTypeId, storagePathIdIn, correspondentId, truncateContent);
         } catch (IOException e) {

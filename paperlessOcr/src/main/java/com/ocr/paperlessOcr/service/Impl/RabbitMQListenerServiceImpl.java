@@ -1,5 +1,7 @@
-package com.ocr.paperlessOcr.service;
+package com.ocr.paperlessOcr.service.Impl;
 
+import com.ocr.paperlessOcr.service.Impl.OCRServiceImpl;
+import com.ocr.paperlessOcr.service.RabbitMQListenerService;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,7 +19,6 @@ public class RabbitMQListenerServiceImpl implements RabbitMQListenerService {
     @RabbitListener(queues = "ocrScanQueue")
     @Override
     public void processQueue(String message) {
-        System.out.println(message);
         ocrService.performOCR(message);
     }
 }

@@ -83,7 +83,7 @@ public class DocumentServiceImpl implements DocumentService {
 
         documentRepository.save(documentsEntity);
 
-        log.info(storagePath.getId().toString());
+        System.out.println(storagePath.getId().toString());
         rabbitMQService.saveInQueue(documentsEntity.getId().toString());
 
     }
@@ -91,16 +91,15 @@ public class DocumentServiceImpl implements DocumentService {
     @Override
     public ResponseEntity<GetDocuments200Response> getDocuments(Integer page, Integer pageSize, String query, String ordering, List<Integer> tagsIdAll, Integer documentTypeId, Integer storagePathIdIn, Integer correspondentId, Boolean truncateContent) throws IOException {
         List<DocumentDTO> documentDTOS = new ArrayList<>();
-        System.out.println("query");
+
 
         if(query == null || query.isEmpty()) {
-            System.out.println("---------------------");
+
             for (Document document : documentRepository.findAll()) {
                 documentDTOS.add(documentMapper.toDto(document));
             }
         } else {
             //search with elasticsearch
-            System.out.println("++++++++++++++++++++++");
             for (Document document : elasticSearch.searchDocument(query)) {
                 documentDTOS.add(documentMapper.toDto(document));
             }

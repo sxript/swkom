@@ -22,6 +22,7 @@ public class MinIOService {
     private String bucketName;
 
     private final MinioClient minioClient;
+
     @Autowired
     public MinIOService(MinioClient minioClient) {
         this.minioClient = minioClient;
@@ -34,12 +35,12 @@ public class MinIOService {
             if (!found) {
                 // if bucket does not exist, create it
                 minioClient.makeBucket(MakeBucketArgs.builder().bucket(bucketName).build());
-                log.info("Bucket created successfully");
+                System.out.println("Bucket created successfully");
             } else {
-                log.info("Bucket " + bucketName + "already exists");
+                System.out.println("Bucket " + bucketName + "already exists");
             }
         } catch (Exception e) {
-            log.error("Bucket does not exist and could not create bucket", e);
+            System.out.println("Bucket does not exist and could not create bucket"+ e);
         }
     }
 
@@ -58,9 +59,9 @@ public class MinIOService {
                             .contentType(documentFile.getContentType())
                             .build()
             );
-            log.info("Document uploaded to MinIO.");
+            System.out.println("Document uploaded to MinIO.");
         } catch (Exception e) {
-            log.error("Error uploading document to MinIO: {}", e.getMessage());
+            System.out.println("Error uploading document to MinIO: {}" + e.getMessage());
             throw new RuntimeException("Error uploading document to MinIO", e);
         }
 
