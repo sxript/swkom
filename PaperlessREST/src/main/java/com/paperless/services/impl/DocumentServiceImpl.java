@@ -104,7 +104,6 @@ public class DocumentServiceImpl implements DocumentService {
                 documentDTOS.add(documentMapper.toDto(document));
             }
 
-
         }
 
 

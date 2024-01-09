@@ -26,8 +26,6 @@ public class ElasticSearchServiceImpl implements SearchIndexService {
     public ElasticSearchServiceImpl(ElasticsearchClient esClient) throws IOException {
         this.esClient = esClient;
 
-
-
         if (!esClient.indices().exists(
                 i -> i.index(ElasticSearchConfig.DOCUMENTS_INDEX_NAME)
         ).value()) {
