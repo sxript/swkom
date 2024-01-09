@@ -3,6 +3,8 @@ package com.paperless.services.mapper;
 import com.paperless.services.dto.DocumentDTO;
 import com.paperless.persistence.entities.*;
 import com.paperless.persistence.repositories.*;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.mapstruct.*;
 import org.openapitools.jackson.nullable.JsonNullable;
 
@@ -20,22 +22,20 @@ import java.util.Set;
         unmappedTargetPolicy = ReportingPolicy.IGNORE,
         nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
 @Service
+
 public abstract class DocumentMapper implements EntityMapper<DocumentDTO, Document> {
 
-    private final DocumentsCorrespondentRepository correspondentRepository;
-    private final DocumentsDocumenttypeRepository documentTypeRepository;
-    private final DocumentsStoragepathRepository storagePathRepository;
-    private final AuthUserRepository userRepository;
-    private final DocumentsDocumentTagsRepository documentTagsRepository;
-
     @Autowired
-    protected DocumentMapper(DocumentsCorrespondentRepository correspondentRepository, DocumentsDocumenttypeRepository documentTypeRepository, DocumentsStoragepathRepository storagePathRepository, AuthUserRepository userRepository, DocumentsDocumentTagsRepository documentTagsRepository) {
-        this.correspondentRepository = correspondentRepository;
-        this.documentTypeRepository = documentTypeRepository;
-        this.storagePathRepository = storagePathRepository;
-        this.userRepository = userRepository;
-        this.documentTagsRepository = documentTagsRepository;
-    }
+    private  DocumentsCorrespondentRepository correspondentRepository;
+    @Autowired
+    private  DocumentsDocumenttypeRepository documentTypeRepository;
+    @Autowired
+    private  DocumentsStoragepathRepository storagePathRepository;
+    @Autowired
+    private  AuthUserRepository userRepository;
+    @Autowired
+    private  DocumentsDocumentTagsRepository documentTagsRepository;
+
 
     @Mapping(target = "correspondent", source = "correspondent", qualifiedByName = "correspondentDto")
     @Mapping(target = "documentType", source = "documentType", qualifiedByName = "documentTypeDto")
