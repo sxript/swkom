@@ -1,4 +1,4 @@
-package com.paperless.mapper;
+package com.paperless.services.mapper;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -12,7 +12,6 @@ import com.paperless.persistence.entities.Document;
 import com.paperless.persistence.entities.DocumentType;
 import com.paperless.persistence.repositories.*;
 import com.paperless.services.dto.DocumentDTO;
-import com.paperless.services.mapper.DocumentMapper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mapstruct.factory.Mappers;
@@ -20,7 +19,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.openapitools.jackson.nullable.JsonNullable;
-import org.springframework.data.annotation.CreatedDate;
 
 @ExtendWith(MockitoExtension.class)
 class DocumentMapperTest {
@@ -78,19 +76,11 @@ class DocumentMapperTest {
         Correspondent correspondent = new Correspondent();
         document.setCorrespondent(correspondent);
 
-        // Perform the mapping
+
         DocumentDTO documentDTO = documentMapper.toDto(document);
 
-        // Assertions
+
         assertNotNull(documentDTO);
         assertEquals(JsonNullable.of(correspondent.getId()), documentDTO.getCorrespondent());
     }
-
-
-
-    // Add more tests for other mapping methods...
-
-
-
-    // Add more tests for other mapping methods...
 }

@@ -4,8 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.paperless.persistence.entities.Document;
 import com.paperless.persistence.entities.StoragePath;
 import com.paperless.persistence.repositories.DocumentsDocumentRepository;
-import com.paperless.services.MinIOService;
-import com.paperless.services.RabbitMQService;
+import com.paperless.services.DocumentService;
 import com.paperless.services.dto.DocumentDTO;
 import com.paperless.services.dto.gets.GetDocuments200Response;
 import com.paperless.services.mapper.DocumentMapper;
@@ -27,30 +26,28 @@ public class DocumentServiceImpl implements DocumentService {
     private final DocumentsDocumentRepository documentRepository;
     private final DocumentMapper documentMapper;
 
-    private final RabbitMQService rabbitMQService;
+    private final RabbitMQServiceImpl rabbitMQServiceImpl;
 
-    private final MinIOService minIOService;
+    private final MinIOServiceImpl minIOService;
 
     private final ElasticSearchImpl elasticSearch;
 
 
-
     @Autowired
-    public DocumentServiceImpl(DocumentsDocumentRepository documentRepository,ElasticSearchImpl elasticSearch, DocumentMapper documentMapper, RabbitMQService rabbitMQService, MinIOService minIOService) {
+    public DocumentServiceImpl(DocumentsDocumentRepository documentRepository, ElasticSearchImpl elasticSearch, DocumentMapper documentMapper, RabbitMQServiceImpl rabbitMQServiceImpl, MinIOServiceImpl minIOService) {
         this.documentRepository = documentRepository;
         this.documentMapper = documentMapper;
-        this.rabbitMQService = rabbitMQService;
+        this.rabbitMQServiceImpl = rabbitMQServiceImpl;
         this.minIOService = minIOService;
         this.elasticSearch = elasticSearch;
     }
 
 
     @Override
-    public void uploadDocument(DocumentDTO documentDTO, MultipartFile file) throws JsonProcessingException {
+    public boolean uploadDocument(DocumentDTO documentDTO, MultipartFile file) throws JsonProcessingException {
 
         Document documentsEntity = documentMapper.toEntity(documentDTO);
 
-        //ToDO: fix Dateiendung
 
         documentsEntity.setChecksum("checksum");
         documentsEntity.setStorageType(documentDTO.getOriginalFileName().get().split("\\.")[1]);
@@ -58,34 +55,25 @@ public class DocumentServiceImpl implements DocumentService {
 
         String path = documentDTO.getOriginalFileName().get();
 
-        String message = minIOService.getBucketName()+"/"+path;
-
+        String message = minIOService.getBucketName() + "/" + path;
 
 
         StoragePath storagePath = StoragePath.builder().path(message)
-        .name(documentDTO.getOriginalFileName().get())
-        .isInsensitive(false)
-        .match("")
-        .matchingAlgorithm(0)
-        .build();
+                .name(documentDTO.getOriginalFileName().get())
+                .isInsensitive(false)
+                .match("")
+                .matchingAlgorithm(0)
+                .build();
 
 
-       documentsEntity.setStoragePath(storagePath);
+        documentsEntity.setStoragePath(storagePath);
 
-        //ToDo: add storagePath to document
-        //ToDo: updateDocumentMapper and getDocumentMapper
-        //ToDo: getDocument and updateDocument Routen
+        if (!minIOService.uploadDocument(file, path)) return false;
 
-
-        //ToDo: maybe extract the minIOService and rabbitMQService to the Controller
-        minIOService.uploadDocument(file, path);
+        documentsEntity = documentRepository.save(documentsEntity);
 
 
-        documentRepository.save(documentsEntity);
-
-        System.out.println(storagePath.getId().toString());
-        rabbitMQService.saveInQueue(documentsEntity.getId().toString());
-
+        return rabbitMQServiceImpl.saveInQueue(documentsEntity.getId().toString());
     }
 
     @Override
@@ -93,35 +81,29 @@ public class DocumentServiceImpl implements DocumentService {
         List<DocumentDTO> documentDTOS = new ArrayList<>();
 
 
-        if(query == null || query.isEmpty()) {
+        if (query == null || query.isEmpty()) {
 
             for (Document document : documentRepository.findAll()) {
                 documentDTOS.add(documentMapper.toDto(document));
             }
         } else {
-            //search with elasticsearch
             for (Document document : elasticSearch.searchDocument(query)) {
                 documentDTOS.add(documentMapper.toDto(document));
             }
-
         }
 
+        GetDocuments200Response response = new GetDocuments200Response();
+        response.setCount(100);
+        response.setNext(1);
+        response.setPrevious(1);
+        response.addAllItem(1);
 
-
-        GetDocuments200Response sampleResponse = new GetDocuments200Response();
-        sampleResponse.setCount(100);
-        sampleResponse.setNext(1);
-        sampleResponse.setPrevious(1);
-        sampleResponse.addAllItem(1);
-
-        for(DocumentDTO documentDTO : documentDTOS) {
-            sampleResponse.addResultsItem(documentDTO.toGetDocuments200ResponseResultsInner());
+        for (DocumentDTO documentDTO : documentDTOS) {
+            response.addResultsItem(documentDTO.toGetDocuments200ResponseResultsInner());
         }
 
-        return ResponseEntity.ok(sampleResponse);
+        return ResponseEntity.ok(response);
     }
-
-
 
 
 }

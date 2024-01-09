@@ -12,6 +12,7 @@ import com.paperless.services.SearchIndexService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,16 +36,16 @@ public class ElasticSearchImpl implements SearchIndexService {
         SearchResponse<ObjectNode> response = esClient.search(s -> s
                         .index(ElasticSearchConfig.DOCUMENTS_INDEX_NAME)
                         .size(1000)
-                        .query(q ->q.multiMatch(m -> m
+                        .query(q -> q.multiMatch(m -> m
                                 .fields("content", "title").query(query))),
                 ObjectNode.class
         );
 
 //ToDo: Logger
         if (response.hits().total().value() != 0) {
-            System.out.println(("Found {} documents" + response.hits().total().value()));
+            log.info("Found {} documents" , response.hits().total().value());
         } else {
-            System.out.println("No documents found");
+            log.error("No documents found");
         }
 
         return extractDocuments(response.hits());

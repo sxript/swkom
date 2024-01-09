@@ -1,4 +1,4 @@
-package com.paperless.services.impl;
+package com.paperless.services;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.paperless.persistence.entities.Document;
@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.util.List;
 
 public interface DocumentService {
-    void uploadDocument(DocumentDTO documentDTO, MultipartFile file) throws JsonProcessingException;
+    boolean uploadDocument(DocumentDTO documentDTO, MultipartFile file) throws JsonProcessingException;
     ResponseEntity<GetDocuments200Response> getDocuments(Integer page, Integer pageSize, String query, String ordering, List<Integer> tagsIdAll, Integer documentTypeId, Integer storagePathIdIn, Integer correspondentId, Boolean truncateContent) throws IOException;
 
 }

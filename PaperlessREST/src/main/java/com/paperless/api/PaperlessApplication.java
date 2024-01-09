@@ -67,20 +67,32 @@ public class PaperlessApplication implements PaperlessApi {
 
         try {
             MultipartFile documentFile = document.get(0);
+
+            if (documentFile.isEmpty())
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
+
             String name = documentFile.getOriginalFilename();
             var filename = JsonNullable.of(documentFile.getOriginalFilename());
             var createtionTime = OffsetDateTime.now();
-
             var fileType = JsonNullable.of(filename.get().split("\\.")[1]);
             byte[] documentContent = documentFile.getBytes();
             var fileContentString = JsonNullable.of(Base64.getEncoder().encodeToString(documentContent));
 
+            System.out.println("filetype: " + fileType.get());
+
+            if (!fileType.get().equals("pdf"))
+                return new ResponseEntity<>(HttpStatus.UNSUPPORTED_MEDIA_TYPE);
+
+
             DocumentDTO documentDTO = DocumentDTO.builder().title(filename).content(JsonNullable.of("")).originalFileName(filename).created(createtionTime)
                     .modified(createtionTime).added(createtionTime).created(OffsetDateTime.now())
-                            .added(OffsetDateTime.now()).modified(OffsetDateTime.now()).build();
+                    .added(OffsetDateTime.now()).modified(OffsetDateTime.now()).build();
 
-            documentService.uploadDocument(documentDTO, documentFile);
-            return new ResponseEntity<>(HttpStatus.OK);
+
+            if (documentService.uploadDocument(documentDTO, documentFile))
+                return new ResponseEntity<>(HttpStatus.OK);
+            else return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 
         } catch (Exception e) {
             log.error(e.getMessage());
@@ -88,7 +100,7 @@ public class PaperlessApplication implements PaperlessApi {
         }
     }
 
-    public static void saveByteArrayToFile(byte[] content, String filePath) throws IOException {
+    private void saveByteArrayToFile(byte[] content, String filePath) throws IOException {
         try (FileOutputStream fos = new FileOutputStream(filePath)) {
             fos.write(content);
         }

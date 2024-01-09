@@ -49,15 +49,6 @@ services:
       - 9090:9090           # this lets us access the minio ui on localhost:9090
       - 9000:9000           # this is the default port for minio
     command: server /data --console-address ":9090"
-  ocr:
-    build:
-      dockerfile: paperlessOcr/Dockerfile
-    ports:
-      - "8089:8089"
-    depends_on:
-      - 'rabbitmq'
-      - 'minio'
-      - 'elastic_search'
   elastic_search:
     image: elasticsearch:8.7.1
     environment:
@@ -74,10 +65,14 @@ services:
     ports:
       - 9200:9200
       - 9300:9300
-  kibanba:
-    image: docker.elastic.co/kibana/kibana:8.2.3
+  ocr:
+    build:
+      dockerfile: paperlessOcr/Dockerfile
     ports:
-      - 5601:5601
-
+      - "8089:8089"
+    depends_on:
+      - 'rabbitmq'
+      - 'minio'
+      - 'elastic_search'
 volumes:
   miniostorage:

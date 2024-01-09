@@ -1,4 +1,4 @@
-package com.paperless.mapper;
+package com.paperless.services.mapper;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -10,7 +10,6 @@ import com.paperless.persistence.entities.Document;
 import com.paperless.persistence.entities.DocumentsNote;
 import com.paperless.persistence.repositories.*;
 import com.paperless.services.dto.gets.GetDocuments200ResponseResultsInnerNotesInner;
-import com.paperless.services.mapper.DocumentNotesMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -18,8 +17,7 @@ import org.mapstruct.factory.Mappers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.openapitools.jackson.nullable.JsonNullable;
-import java.time.OffsetDateTime;
+
 import java.util.Optional;
 
 @ExtendWith(MockitoExtension.class)
@@ -81,16 +79,15 @@ class DocumentNotesMapperTest {
 
     @Test
     void toDto_ValidEntity_ReturnsDTOWithMappedValues() {
-        // Arrange
 
-        // Act
+
         GetDocuments200ResponseResultsInnerNotesInner result = documentNotesMapper.toDto(sampleNoteEntity);
 
-        // Assert
+
         assertNotNull(result);
         assertEquals("2022-01-01T12:00Z", result.getCreated());
     }
 
-    // Add more tests following AAA pattern...
+
 
 }
